@@ -99,7 +99,6 @@ namespace PE1
                 if (StudentRoster[i].Major == majorSearch)
                 {
                     Console.WriteLine(StudentRoster[i].ToString());
-                    return;
                 }
             }
         }
