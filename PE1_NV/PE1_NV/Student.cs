@@ -35,6 +35,9 @@ namespace PE1
         //main constructor
         public Student(string name, string major, int birthYear)
         {
+            Name = name;
+            Major = major;
+            BirthYear = birthYear;
         }
 
         //default constructor

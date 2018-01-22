@@ -15,7 +15,7 @@ namespace PE1
             roster.AddStudent("Jon Arbuckle", "Animation", 1999);
             roster.AddStudent("Natsu Dragneel", "Game Design", 1999);
 
-            //enter the switch until they quit
+            //enter the switch until they quit           
             roster.Menu();
 
         }
