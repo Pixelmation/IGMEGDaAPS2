@@ -73,7 +73,7 @@ namespace PE1
                 if (StudentRoster[i].Name == nameSearch)
                 {
                     Console.WriteLine("Removed " + nameSearch + " from the roster");
-                    Console.WriteLine(StudentRoster[i].ToString());
+                    StudentRoster.RemoveAt(i);
                     return;
                 }
             }
