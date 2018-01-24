@@ -15,7 +15,7 @@ namespace PE2
         //list to hold info
         List<string> listMessage = new List<string>();
 
-        //constuctor
+
         public MessageLog(string message)
         {
             label = "You Rolled a 20: ";

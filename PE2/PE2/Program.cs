@@ -19,7 +19,7 @@ namespace PE2
             MessageLog messageLog = new MessageLog("");
 
             //connect RolledATwenty and Save()
-            die.RolledATwenty += messageLog.Save;
+            //die.RolledATwenty += messageLog.Save;
 
             //print the roll results and where 20s are
             die.Roll();
