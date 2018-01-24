@@ -14,7 +14,7 @@ namespace PE2
 
         static void Main(string[] args)
         {
-            MessageLog messageLog = new MessageLog("You rolled a 20", message);
+            MessageLog messageLog = new MessageLog("You rolled a 20", "");
             Die die = new Die();
 
             die.RolledATwenty += messageLog.Save;
