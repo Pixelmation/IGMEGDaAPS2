@@ -16,10 +16,10 @@ namespace PE2
         List<string> listMessage = new List<string>();
 
 
-        public MessageLog(string message)
+        public MessageLog()
         {
             label = "You Rolled a 20: ";
-            this.message = message;
+            listMessage = new List<string>();
         }
 
 
@@ -37,6 +37,7 @@ namespace PE2
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write(label);
+                message = listMessage[i];
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(message);
             }
