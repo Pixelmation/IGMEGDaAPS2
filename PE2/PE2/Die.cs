@@ -11,8 +11,10 @@ namespace PE2
         //event triggered when a 20 is rolled
         public event MessageDelegate RolledATwenty;
 
+        //rng
         Random RNG = new Random();
 
+        //roll function that calls RolledATwenty everytime randNum = 20
         public void Roll()
         {
             int numOfRolls = 100;

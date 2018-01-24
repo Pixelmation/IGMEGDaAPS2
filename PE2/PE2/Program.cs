@@ -14,11 +14,14 @@ namespace PE2
 
         static void Main(string[] args)
         {
-            MessageLog messageLog = new MessageLog("You rolled a 20", "");
+            //instantiate the other classes
             Die die = new Die();
+            MessageLog messageLog = new MessageLog("");
 
+            //connect RolledATwenty and Save()
             die.RolledATwenty += messageLog.Save;
 
+            //print the roll results and where 20s are
             die.Roll();
             messageLog.print();
 
