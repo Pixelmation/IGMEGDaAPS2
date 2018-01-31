@@ -28,19 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.LabelRules = new System.Windows.Forms.Label();
             this.Rule1 = new System.Windows.Forms.Label();
             this.Rule2 = new System.Windows.Forms.Label();
             this.Rule3 = new System.Windows.Forms.Label();
             this.Rule4 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.Timer = new System.Windows.Forms.Label();
+            this.TimerBar = new System.Windows.Forms.ProgressBar();
+            this.LabelTimer = new System.Windows.Forms.Label();
             this.ButtonStart = new System.Windows.Forms.Button();
             this.Wire1 = new System.Windows.Forms.Button();
             this.Wire2 = new System.Windows.Forms.Button();
             this.Wire3 = new System.Windows.Forms.Button();
             this.Wire4 = new System.Windows.Forms.Button();
             this.Wire5 = new System.Windows.Forms.Button();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // LabelRules
@@ -93,22 +95,22 @@
             this.Rule4.TabIndex = 4;
             this.Rule4.Text = "Otherwise, cut the last wire";
             // 
-            // progressBar1
+            // TimerBar
             // 
-            this.progressBar1.Location = new System.Drawing.Point(31, 420);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(210, 29);
-            this.progressBar1.TabIndex = 5;
+            this.TimerBar.Location = new System.Drawing.Point(31, 420);
+            this.TimerBar.Name = "TimerBar";
+            this.TimerBar.Size = new System.Drawing.Size(210, 29);
+            this.TimerBar.TabIndex = 5;
             // 
-            // Timer
+            // LabelTimer
             // 
-            this.Timer.AutoSize = true;
-            this.Timer.Font = new System.Drawing.Font("Modern No. 20", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Timer.Location = new System.Drawing.Point(27, 396);
-            this.Timer.Name = "Timer";
-            this.Timer.Size = new System.Drawing.Size(214, 21);
-            this.Timer.TabIndex = 6;
-            this.Timer.Text = "Time Until Detonation:";
+            this.LabelTimer.AutoSize = true;
+            this.LabelTimer.Font = new System.Drawing.Font("Modern No. 20", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LabelTimer.Location = new System.Drawing.Point(27, 396);
+            this.LabelTimer.Name = "LabelTimer";
+            this.LabelTimer.Size = new System.Drawing.Size(214, 21);
+            this.LabelTimer.TabIndex = 6;
+            this.LabelTimer.Text = "Time Until Detonation:";
             // 
             // ButtonStart
             // 
@@ -128,6 +130,7 @@
             this.Wire1.Size = new System.Drawing.Size(600, 20);
             this.Wire1.TabIndex = 8;
             this.Wire1.UseVisualStyleBackColor = false;
+            this.Wire1.Click += new System.EventHandler(this.Wire_Click);
             // 
             // Wire2
             // 
@@ -137,6 +140,7 @@
             this.Wire2.Size = new System.Drawing.Size(600, 20);
             this.Wire2.TabIndex = 9;
             this.Wire2.UseVisualStyleBackColor = false;
+            this.Wire2.Click += new System.EventHandler(this.Wire_Click);
             // 
             // Wire3
             // 
@@ -146,6 +150,7 @@
             this.Wire3.Size = new System.Drawing.Size(600, 20);
             this.Wire3.TabIndex = 10;
             this.Wire3.UseVisualStyleBackColor = false;
+            this.Wire3.Click += new System.EventHandler(this.Wire_Click);
             // 
             // Wire4
             // 
@@ -155,6 +160,7 @@
             this.Wire4.Size = new System.Drawing.Size(600, 20);
             this.Wire4.TabIndex = 11;
             this.Wire4.UseVisualStyleBackColor = false;
+            this.Wire4.Click += new System.EventHandler(this.Wire_Click);
             // 
             // Wire5
             // 
@@ -164,6 +170,12 @@
             this.Wire5.Size = new System.Drawing.Size(600, 20);
             this.Wire5.TabIndex = 12;
             this.Wire5.UseVisualStyleBackColor = false;
+            this.Wire5.Click += new System.EventHandler(this.Wire_Click);
+            // 
+            // timer
+            // 
+            this.timer.Enabled = true;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // Form1
             // 
@@ -176,8 +188,8 @@
             this.Controls.Add(this.Wire2);
             this.Controls.Add(this.Wire1);
             this.Controls.Add(this.ButtonStart);
-            this.Controls.Add(this.Timer);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.LabelTimer);
+            this.Controls.Add(this.TimerBar);
             this.Controls.Add(this.Rule4);
             this.Controls.Add(this.Rule3);
             this.Controls.Add(this.Rule2);
@@ -186,6 +198,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Proceed To Converse and none shall Discharge Their Bodily Scraps Haphazardly";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -198,14 +211,15 @@
         private System.Windows.Forms.Label Rule2;
         private System.Windows.Forms.Label Rule3;
         private System.Windows.Forms.Label Rule4;
-        private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Label Timer;
+        private System.Windows.Forms.ProgressBar TimerBar;
+        private System.Windows.Forms.Label LabelTimer;
         private System.Windows.Forms.Button ButtonStart;
         private System.Windows.Forms.Button Wire1;
         private System.Windows.Forms.Button Wire2;
         private System.Windows.Forms.Button Wire3;
         private System.Windows.Forms.Button Wire4;
         private System.Windows.Forms.Button Wire5;
+        private System.Windows.Forms.Timer timer;
     }
 }
 
