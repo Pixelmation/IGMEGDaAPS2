@@ -44,5 +44,10 @@ namespace Form_Practice
         {
             buttonYes.Location = new Point(RandWidth(), RandHeight());
         }
+
+        private void buttonYes_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Oh.");
+        }
     }
 }

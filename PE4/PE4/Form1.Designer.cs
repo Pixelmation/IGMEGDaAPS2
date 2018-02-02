@@ -119,12 +119,14 @@
             this.ButtonStart.Name = "ButtonStart";
             this.ButtonStart.Size = new System.Drawing.Size(130, 130);
             this.ButtonStart.TabIndex = 7;
-            this.ButtonStart.Text = "Start/Reset";
+            this.ButtonStart.Text = "Start";
             this.ButtonStart.UseVisualStyleBackColor = true;
+            this.ButtonStart.Click += new System.EventHandler(this.ButtonStart_Click);
             // 
             // Wire1
             // 
             this.Wire1.BackColor = System.Drawing.Color.Red;
+            this.Wire1.Enabled = false;
             this.Wire1.Location = new System.Drawing.Point(90, 200);
             this.Wire1.Name = "Wire1";
             this.Wire1.Size = new System.Drawing.Size(600, 20);
@@ -135,6 +137,7 @@
             // Wire2
             // 
             this.Wire2.BackColor = System.Drawing.Color.Black;
+            this.Wire2.Enabled = false;
             this.Wire2.Location = new System.Drawing.Point(90, 226);
             this.Wire2.Name = "Wire2";
             this.Wire2.Size = new System.Drawing.Size(600, 20);
@@ -145,6 +148,7 @@
             // Wire3
             // 
             this.Wire3.BackColor = System.Drawing.Color.Blue;
+            this.Wire3.Enabled = false;
             this.Wire3.Location = new System.Drawing.Point(90, 252);
             this.Wire3.Name = "Wire3";
             this.Wire3.Size = new System.Drawing.Size(600, 20);
@@ -155,6 +159,7 @@
             // Wire4
             // 
             this.Wire4.BackColor = System.Drawing.Color.White;
+            this.Wire4.Enabled = false;
             this.Wire4.Location = new System.Drawing.Point(90, 278);
             this.Wire4.Name = "Wire4";
             this.Wire4.Size = new System.Drawing.Size(600, 20);
@@ -165,6 +170,7 @@
             // Wire5
             // 
             this.Wire5.BackColor = System.Drawing.Color.Yellow;
+            this.Wire5.Enabled = false;
             this.Wire5.Location = new System.Drawing.Point(90, 304);
             this.Wire5.Name = "Wire5";
             this.Wire5.Size = new System.Drawing.Size(600, 20);
@@ -174,7 +180,6 @@
             // 
             // timer
             // 
-            this.timer.Enabled = true;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // Form1
