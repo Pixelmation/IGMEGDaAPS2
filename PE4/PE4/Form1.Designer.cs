@@ -99,7 +99,7 @@
             // 
             this.TimerBar.Location = new System.Drawing.Point(31, 420);
             this.TimerBar.Name = "TimerBar";
-            this.TimerBar.Size = new System.Drawing.Size(210, 29);
+            this.TimerBar.Size = new System.Drawing.Size(203, 29);
             this.TimerBar.TabIndex = 5;
             // 
             // LabelTimer

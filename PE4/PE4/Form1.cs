@@ -14,7 +14,6 @@ namespace PE4
     {
         //initializing variables and other required fields
         Form2 Form2;
-        int progress = 0;
         Random RNG = new Random();
         List<Button> Wires = new List<Button>();
         string titleF2;
@@ -23,7 +22,6 @@ namespace PE4
         {
             InitializeComponent();
 
-            Form2 = new Form2(titleF2);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -48,12 +46,13 @@ namespace PE4
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            progress++;
+            TimerBar.Minimum = 0;
+            TimerBar.Maximum = 110;
             TimerBar.Increment(1);
-            if (progress == TimerBar.Maximum)
+            if (TimerBar.Value == TimerBar.Maximum)
             {
-                progress = 0;
-                Lose();
+                string bColor = "You ran out of time!";
+                Lose(bColor);
             }
         }
 
@@ -67,6 +66,7 @@ namespace PE4
 
             //if a rule is true, asks for the correct sender and you lose if the sender isn't the right wire
             #region final check
+            Button button = (Button)sender;
             if (param1 == true)
             {
                 if (sender == Wire2)
@@ -76,7 +76,8 @@ namespace PE4
                 }
                 else
                 {
-                    Lose();
+                    string bColor = button.BackColor.Name;
+                    Lose(bColor);
                     return;
                 }
             }
@@ -90,7 +91,8 @@ namespace PE4
                 }
                 else
                 {
-                    Lose();
+                    string bColor = button.BackColor.Name;
+                    Lose(bColor);
                     return;
                 }
             }
@@ -107,7 +109,8 @@ namespace PE4
                 }
                 else
                 {
-                    Lose();
+                    string bColor = button.BackColor.Name;
+                    Lose(bColor);
                     return;
                 }
             }
@@ -120,8 +123,9 @@ namespace PE4
                     return;
                 }
                 else
-                {                   
-                    Lose();
+                {
+                    string bColor = button.BackColor.Name;
+                    Lose(bColor);
                     return;
                 }
             }
@@ -199,19 +203,21 @@ namespace PE4
             Wire4.Enabled = false;
             Wire5.Enabled = false;
             ButtonStart.Text = "Reset";
-            MessageBox.Show("You defused the bomb!");
+            MessageBox.Show("You defused the bomb!", "Congrats!");
         }
 
-        void Lose()
+        void Lose(string bColor)
         {
-            titleF2 = "You clicked the " + BackColor + "wire!";
-            timer.Stop();
+            titleF2 = "You clicked the " + bColor + " wire!";
+            TimerBar.Value = 0;
+            timer.Enabled = false;
             Wire1.Enabled = false;
             Wire2.Enabled = false;
             Wire3.Enabled = false;
             Wire4.Enabled = false;
             Wire5.Enabled = false;
             ButtonStart.Text = "Reset";
+            Form2 = new Form2(titleF2);
             Form2.ShowDialog();
         }
         #endregion

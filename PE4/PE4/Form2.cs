@@ -15,7 +15,6 @@ namespace PE4
         public Form2(string titleColor)
         {
             InitializeComponent();
-            titleColor = "Oops! You cut the " +titleColor+ " Wire!";
             this.Text = titleColor;
         }
     }
