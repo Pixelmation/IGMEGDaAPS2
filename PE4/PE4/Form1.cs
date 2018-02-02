@@ -12,24 +12,32 @@ namespace PE4
 {
     public partial class Form1 : Form
     {
+        //initializing variables and other required fields
         Form2 Form2;
         int progress = 0;
+        Random RNG = new Random();
+        List<Button> Wires = new List<Button>();
+        string titleF2;
 
         public Form1()
         {
             InitializeComponent();
 
-            Form2 = new Form2();
-            
+            Form2 = new Form2(titleF2);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            Wires.Add(Wire1);
+            Wires.Add(Wire2);
+            Wires.Add(Wire3);
+            Wires.Add(Wire4);
+            Wires.Add(Wire5);
         }
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
+            ButtonColors();
             Wire1.Enabled = true;
             Wire2.Enabled = true;
             Wire3.Enabled = true;
@@ -42,7 +50,6 @@ namespace PE4
         {
             progress++;
             TimerBar.Increment(1);
-            
             if (progress == TimerBar.Maximum)
             {
                 progress = 0;
@@ -65,10 +72,12 @@ namespace PE4
                 if (sender == Wire2)
                 {                    
                     Win();
+                    return;
                 }
                 else
                 {
                     Lose();
+                    return;
                 }
             }
 
@@ -77,10 +86,12 @@ namespace PE4
                 if (sender == Wire5)
                 {
                     Win();
+                    return;
                 }
                 else
                 {
                     Lose();
+                    return;
                 }
             }
 
@@ -92,10 +103,12 @@ namespace PE4
                     (sender == Wire2 && Wire2.BackColor == Color.Blue && Wire5.BackColor != Color.Blue && Wire4.BackColor != Color.Blue && Wire3.BackColor != Color.Blue))
                 {
                     Win();
+                    return;
                 }
                 else
                 {
                     Lose();
+                    return;
                 }
             }
 
@@ -104,13 +117,15 @@ namespace PE4
                 if (sender == Wire5)
                 {
                     Win();
+                    return;
                 }
                 else
-                {
+                {                   
                     Lose();
+                    return;
                 }
             }
-            #endregion
+            #endregion           
         }
 
         //hardcoded rules that return true or false on if they're reached
@@ -189,6 +204,7 @@ namespace PE4
 
         void Lose()
         {
+            titleF2 = "You clicked the " + BackColor + "wire!";
             timer.Stop();
             Wire1.Enabled = false;
             Wire2.Enabled = false;
@@ -197,9 +213,44 @@ namespace PE4
             Wire5.Enabled = false;
             ButtonStart.Text = "Reset";
             Form2.ShowDialog();
-
         }
         #endregion
 
+        //methods for randomizing the wire colors
+        #region Random Colors
+        void ButtonColors()
+        {
+            foreach (Button Button in Wires)
+            {
+                int color = RandNum();
+                switch (color)
+                {
+                    case 1:
+                        Button.BackColor = Color.Blue;
+                        break;
+                    case 2:
+                        Button.BackColor = Color.Black;
+                        break;
+                    case 3:
+                        Button.BackColor = Color.Red;
+                        break;
+                    case 4:
+                        Button.BackColor = Color.White;
+                        break;
+                    case 5:
+                        Button.BackColor = Color.Yellow;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        
+        int RandNum()
+        {
+            int rgb = RNG.Next(1, 5);
+            return rgb;
+        }
+        #endregion
     }
 }

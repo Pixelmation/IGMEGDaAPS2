@@ -12,14 +12,10 @@ namespace PE4
 {
     public partial class Form2 : Form
     {
-        public Form2()
+        public Form2(string titleColor)
         {
             InitializeComponent();
-        }
-
-        public Form2(IContainer components, string titleColor)
-        {
-            titleColor = "Oops! You cut the wrong Wire!";
+            titleColor = "Oops! You cut the " +titleColor+ " Wire!";
             this.Text = titleColor;
         }
     }
