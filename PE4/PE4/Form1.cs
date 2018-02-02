@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PE4
+namespace PE5
 {
     public partial class Form1 : Form
     {
@@ -36,6 +36,7 @@ namespace PE4
         private void ButtonStart_Click(object sender, EventArgs e)
         {
             ButtonColors();
+            TimerBar.Value = 0;
             Wire1.Enabled = true;
             Wire2.Enabled = true;
             Wire3.Enabled = true;

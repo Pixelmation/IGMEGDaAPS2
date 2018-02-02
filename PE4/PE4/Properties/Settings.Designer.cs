@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PE4.Properties
+namespace PE5.Properties
 {
 
 
