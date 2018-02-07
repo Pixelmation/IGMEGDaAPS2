@@ -33,9 +33,10 @@ namespace Hell_Interface
         /// <summary>
         /// disables max/min, resize and close
         /// </summary>
-        public FormSubmit()
+        public FormSubmit(string name)
         {
             InitializeComponent();
+            this.Text = "Application Confirmation for " + name;
             this.ControlBox = false;
         }
 

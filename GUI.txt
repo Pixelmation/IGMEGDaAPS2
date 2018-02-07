@@ -1,0 +1,33 @@
+Nick Valcour, section 106.03
+
+I chose an application theme because those seem to never be very well made, so I made one that, while it technically works, doesn't do it very well
+
+The form lets you add your information for a job(unpaid intern), albeit poorly.
+
+Form1.cs
+----------------
+-The radio buttons will change their numbers whenever one is chosen to an int between 1 and 100
+-the checkboxes will always change to unpaid intern
+-the phonenumber section only goes up by one and can't be typed in
+-the mail box is unable to be interacted with, leaving it as Mail@mail.mail
+-the exit button brings you to FormExit.cs
+-The Yes button makes every word "Yes"
+-The Next button brings you to FormSubmit.cs
+
+
+FormExit.cs
+----------------
+-this.text changes based on your name
+-each time you press the yes button, the form changes location on screen and adds a 'really' to the question until you hit 9, then it actually quits
+-the no button simply brings you back to Form1.cs
+
+
+FormSubmit.cs
+----------------
+-this.text changes basced on your name
+-a number 25 digits long is generated on form creation, and you have to type it(can't be copied). if it's correct, when you press confirm you will get a 
+messagebox to congragulate you. if it doesn't match, then it will close the FormSubmit.cs and you have to try again with a new number
+when you press back it will bring you back to Form1.cs
+
+To stop the form simply go through FormExit, FormSubmit, or Alt+f4
+

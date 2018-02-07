@@ -42,9 +42,10 @@ namespace Hell_Interface
         /// <summary>
         /// constructor that hides max/min, resize and close button
         /// </summary>
-        public FormExit()
+        public FormExit(string name)
         {
             InitializeComponent();
+            this.Text = "Are you sure you want to exit, " + name + "?";
             this.ControlBox = false;
         }
 
@@ -72,7 +73,6 @@ namespace Hell_Interface
             if (clicks >=9)
             {
                 Application.Exit();
-
             }
         }
 
