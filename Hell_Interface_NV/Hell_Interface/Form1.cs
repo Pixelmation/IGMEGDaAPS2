@@ -12,6 +12,9 @@ namespace Hell_Interface
 {
     public partial class Form1 : Form
     {
+        FormExit form = new FormExit();
+        FormSubmit FormSub = new FormSubmit();
+
         //List of radio buttons
         List<RadioButton> AgeButton = new List<RadioButton>();
 
@@ -100,8 +103,6 @@ namespace Hell_Interface
         /// <param name="e"></param>
         private void buttonExit_Click(object sender, EventArgs e)
         {
-            
-            FormExit form = new FormExit(textBoxName.Text);
             form.ShowDialog();
 
         }
@@ -121,7 +122,6 @@ namespace Hell_Interface
 
         private void buttonNext_Click(object sender, EventArgs e)
         {
-            FormSubmit FormSub = new FormSubmit(textBoxName.Text);
             FormSub.ShowDialog();
         }
     }
