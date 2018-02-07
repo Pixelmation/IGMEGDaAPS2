@@ -12,15 +12,18 @@ namespace PE6
         
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        
         //create variables for position and the image
         Vector2 position;
+        Vector2 textPosition;
         Texture2D image;
 
         //sets the speed of the image as it moves around
         Vector2 velocity = new Vector2(100, 100);
 
-    
+        //create the spritefont
+        SpriteFont ComicSans20;
+
         /// <summary>
         /// constructor
         /// </summary>
@@ -55,6 +58,8 @@ namespace PE6
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             image = this.Content.Load<Texture2D>("Pixelmation_Logo_Transparent");
+
+            ComicSans20 = Content.Load<SpriteFont>("ComicSans20");
 
 
             // TODO: use this.Content to load your game content here
@@ -126,9 +131,17 @@ namespace PE6
             //Draw the image
             spriteBatch.Begin();
             spriteBatch.Draw(image, position, null, Color.White);
+
+            string theText = "Wow what a cool screensaver";
+            Vector2 textDisplay = ComicSans20.MeasureString(theText);
+            textPosition = new Vector2((graphics.GraphicsDevice.Viewport.Width - textDisplay.X) / 2, (graphics.GraphicsDevice.Viewport.Height - textDisplay.Y) / 2);
+            spriteBatch.DrawString(ComicSans20, theText, textPosition, Color.Black);
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
+        
+
     }
 }
