@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace PE7
 {
@@ -12,17 +13,17 @@ namespace PE7
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        //creates variables for the keyboard state
-        KeyboardState CState = Keyboard.GetState();
-        KeyboardState PState = Keyboard.GetState();
 
-        //create texture for the sprite and it's position
+        //create variables for the texture of the sprite, a rectangle for it and it's position
         Texture2D sprite;
-        Vector2 positionSprite;
+        Rectangle rect;
+        int originX;
+        int originY;
 
-        //create variables for the text and it's position
+        //create spritefont for the text
+        SpriteFont Font;
 
-                public Game1()
+        public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -39,11 +40,19 @@ namespace PE7
             // TODO: Add your initialization logic here
 
             base.Initialize();
-            graphics.PreferredBackBufferHeight = 540;
+
+            //change the window size to 960x540
             graphics.PreferredBackBufferWidth = 960;
+            graphics.PreferredBackBufferHeight = 540;
             graphics.ApplyChanges();
-            positionSprite = new Vector2((graphics.GraphicsDevice.Viewport.Width / 2) - sprite.Width / 2,
-                       (graphics.GraphicsDevice.Viewport.Height / 2) - sprite.Height / 2);
+
+            rect = new Rectangle(graphics.GraphicsDevice.Viewport.Width / 2 - sprite.Width / 2,
+                                 graphics.GraphicsDevice.Viewport.Height / 2 - sprite.Height / 2, 
+                                  sprite.Width, 
+                                  sprite.Height);
+
+            Font = Content.Load<SpriteFont>("Arial20");
+
         }
 
         /// <summary>
@@ -58,8 +67,6 @@ namespace PE7
             // TODO: use this.Content to load your game content here
             //load the mew sprite
             sprite = Content.Load<Texture2D>("Mew");
-
-
         }
 
         /// <summary>
@@ -84,22 +91,31 @@ namespace PE7
             // TODO: Add your update logic here
 
             //add movement dependent on WASD keys in traditional directions
+            #region movement code        
+            //creates variable for the keyboard state
+            KeyboardState CState = Keyboard.GetState();
+
+            //move up for W
             if (CState.IsKeyDown(Keys.W))
-            {
-                positionSprite.Y -= 10;
-            }
+                rect.Y -= 10;
+
+            //move down for S
             if (CState.IsKeyDown(Keys.S))
-            {
-                positionSprite.Y += 10;
-            }
+                rect.Y += 10;
+
+            //move left for A
             if (CState.IsKeyDown(Keys.A))
-            {
-                positionSprite.X -= 10;
-            }
+                rect.X -= 10;
+
+            //move right for D
             if (CState.IsKeyDown(Keys.D))
-            {
-                positionSprite.X += 10;
-            }
+                rect.X += 10;
+            #endregion
+
+
+            //updates the location of the rectangle's origin in it's X and Y coordinates
+            originX = rect.X + sprite.Width / 2;
+            originY = rect.Y + sprite.Height / 2;
             base.Update(gameTime);
         }
         /// <summary>
@@ -110,10 +126,19 @@ namespace PE7
         {
             GraphicsDevice.Clear(Color.OldLace);
 
+            //creates the string for name and coordinates
+            string location = "Nick Valcour" + 
+                              "\n(X,Y) coordinates = " + originX.ToString() + ", " + originY.ToString();
+
             // TODO: Add your drawing code here
+            //draw the sprite inside teh rectanlge, then the text
+            #region draw code
             spriteBatch.Begin();
-            spriteBatch.Draw(sprite, positionSprite, Color.White);
+            spriteBatch.Draw(sprite, rect, Color.White);
+            spriteBatch.DrawString(Font, location, new Vector2(10,10), Color.Black);
             spriteBatch.End();
+            #endregion
+
             base.Draw(gameTime);
         }
     }
