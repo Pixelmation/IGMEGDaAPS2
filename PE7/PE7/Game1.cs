@@ -13,7 +13,16 @@ namespace PE7
         SpriteBatch spriteBatch;
 
         //creates variables for the keyboard state
-        public Game1()
+        KeyboardState CState = Keyboard.GetState();
+        KeyboardState PState = Keyboard.GetState();
+
+        //create texture for the sprite and it's position
+        Texture2D sprite;
+        Vector2 positionSprite;
+
+        //create variables for the text and it's position
+
+                public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -30,6 +39,11 @@ namespace PE7
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            graphics.PreferredBackBufferHeight = 540;
+            graphics.PreferredBackBufferWidth = 960;
+            graphics.ApplyChanges();
+            positionSprite = new Vector2((graphics.GraphicsDevice.Viewport.Width / 2) - sprite.Width / 2,
+                       (graphics.GraphicsDevice.Viewport.Height / 2) - sprite.Height / 2);
         }
 
         /// <summary>
@@ -42,6 +56,10 @@ namespace PE7
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            //load the mew sprite
+            sprite = Content.Load<Texture2D>("Mew");
+
+
         }
 
         /// <summary>
@@ -65,9 +83,25 @@ namespace PE7
 
             // TODO: Add your update logic here
 
+            //add movement dependent on WASD keys in traditional directions
+            if (CState.IsKeyDown(Keys.W))
+            {
+                positionSprite.Y -= 10;
+            }
+            if (CState.IsKeyDown(Keys.S))
+            {
+                positionSprite.Y += 10;
+            }
+            if (CState.IsKeyDown(Keys.A))
+            {
+                positionSprite.X -= 10;
+            }
+            if (CState.IsKeyDown(Keys.D))
+            {
+                positionSprite.X += 10;
+            }
             base.Update(gameTime);
         }
-
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -77,7 +111,9 @@ namespace PE7
             GraphicsDevice.Clear(Color.OldLace);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            spriteBatch.Draw(sprite, positionSprite, Color.White);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
