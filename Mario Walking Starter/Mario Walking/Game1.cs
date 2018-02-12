@@ -8,6 +8,7 @@ namespace Mario_Walking
     // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
     // PRACTICE EXERCISE:  Enums are typically declared here!
 
+    //create enum for mario
     enum MarioState
     {
         FaceLeft,
@@ -91,43 +92,6 @@ namespace Mario_Walking
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             KeyboardState state = Keyboard.GetState();
-            switch (MState)
-            {
-                case MarioState.FaceLeft:
-                    if (state.IsKeyDown(Keys.Left))
-                    {
-                        MState = MarioState.WalkLeft;
-                    }
-                    if (state.IsKeyDown(Keys.Right))
-                    {
-                        MState = MarioState.WalkRight;
-                    }
-                    break;
-                case MarioState.FaceRight:
-                    if (state.IsKeyDown(Keys.Left))
-                    {
-                        MState = MarioState.WalkLeft;
-                    }
-                    if (state.IsKeyDown(Keys.Right))
-                    {
-                        MState = MarioState.WalkRight;
-                    }
-                    break;
-                case MarioState.WalkLeft:
-                    if (state.IsKeyUp(Keys.Left) && state.IsKeyUp(Keys.Right))
-                    {
-                        MState = MarioState.FaceLeft;
-                    }
-                    break;
-                case MarioState.WalkRight:
-                    if (state.IsKeyUp(Keys.Left) && state.IsKeyUp(Keys.Right))
-                    {
-                        MState = MarioState.FaceRight;
-                    }
-                    break;
-                default:
-                    break;
-            }
 
             // Handles animation for you
             UpdateAnimation(gameTime);
@@ -136,6 +100,100 @@ namespace Mario_Walking
             // PRACTICE EXERCISE: Add your finite state machine code (switch statement) here!
             // - Be sure to check the finite state machine's state first
             // - Then check for specific transitions inside each state (may require keyboard input)
+
+            //switch statement for checking each state
+            #region the switch statement for changing state
+            switch (MState)
+            {
+                //if mario is facing left
+                case MarioState.FaceLeft:
+                    //if left arrow is held, change state to walkleft
+                    if (state.IsKeyDown(Keys.Left))
+                    {
+                        MState = MarioState.WalkLeft;
+
+                    }
+
+                    //if right arrow is held, change state to walkright
+                    if (state.IsKeyDown(Keys.Right))
+                    {
+                        MState = MarioState.WalkRight;
+                    }
+                    break;
+
+                //if mario is facing right
+                case MarioState.FaceRight:
+                    //if left arrow is held, change state to walkleft
+                    if (state.IsKeyDown(Keys.Left))
+                    {
+                        MState = MarioState.WalkLeft;
+                    }
+
+                    //if right arrow is held, change state to walkright
+                    if (state.IsKeyDown(Keys.Right))
+                    {
+                        MState = MarioState.WalkRight;
+                    }
+                    break;
+
+                //if mario is walking left
+                case MarioState.WalkLeft:
+
+                    //if neither key is held, change state to faceleft
+                    if (state.IsKeyUp(Keys.Left) && state.IsKeyUp(Keys.Right))
+                    {
+                        MState = MarioState.FaceLeft;
+                    }
+
+                    //if left arrow is up and right arrow is down, change state to walkright
+                    if (state.IsKeyUp(Keys.Left) && state.IsKeyDown(Keys.Right))
+                    {
+                        MState = MarioState.WalkRight;
+                    }
+                    break;
+
+
+                case MarioState.WalkRight:
+                    //if neither key is held, change state to faceright
+                    if (state.IsKeyUp(Keys.Left) && state.IsKeyUp(Keys.Right))
+                    {
+                        MState = MarioState.FaceRight;
+                    }
+
+                    //if right arrow is up and left arrow is down, change state to walkleft
+                    if (state.IsKeyUp(Keys.Right) && state.IsKeyDown(Keys.Left))
+                    {
+                        MState = MarioState.WalkLeft;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            #endregion
+
+            //if MState is WalkLeft, move left 5 pixels. if it's WalkRight, then move right 2 pixels. 
+            //If LeftShift is held, add/subtract another 4 pixels(sprint check)
+            #region the switch statements for moving
+            switch (MState)
+            {
+                case MarioState.WalkLeft:
+                    marioLoc.X -= 2;
+                    if (state.IsKeyDown(Keys.LeftShift))
+                    {
+                        marioLoc.X -= 4;
+                    }
+                    break;
+                case MarioState.WalkRight:
+                    marioLoc.X += 2;
+                    if (state.IsKeyDown(Keys.LeftShift))
+                    {
+                        marioLoc.X += 4;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            #endregion
 
             // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
@@ -156,7 +214,27 @@ namespace Mario_Walking
             // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
             // PRACTICE EXERCISE: Check the finite state machine state here to
             // determine how exactly to draw Mario
-            DrawMarioWalking(SpriteEffects.None); // You may alter/remove this line
+
+            //Draws mario depending on his state
+            #region draw switch
+            switch (MState)
+            {
+                case MarioState.FaceLeft:
+                    DrawMarioStanding(SpriteEffects.FlipHorizontally);
+                    break;
+                case MarioState.FaceRight:
+                    DrawMarioStanding(SpriteEffects.None);
+                    break;
+                case MarioState.WalkLeft:
+                    DrawMarioWalking(SpriteEffects.FlipHorizontally);
+                    break;
+                case MarioState.WalkRight:
+                    DrawMarioWalking(SpriteEffects.None);
+                    break;
+                default:
+                    break;
+            }
+            #endregion
 
             // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
