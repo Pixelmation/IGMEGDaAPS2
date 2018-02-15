@@ -150,6 +150,7 @@ namespace Collision_Detection
             position5 += velocity5 * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //set the X and Y for each collectable rect
+            #region changing coords
             collectableRect1.X = (int)position1.X;
             collectableRect1.Y = (int)position1.Y;
 
@@ -164,6 +165,7 @@ namespace Collision_Detection
 
             collectableRect5.X = (int)position5.X;
             collectableRect5.Y = (int)position5.Y;
+            #endregion
 
             #region bounds check for collectableRect1
             if (collectableRect1.Left <= 0 && velocity1.X < 0)
@@ -288,8 +290,9 @@ namespace Collision_Detection
             }
             #endregion
 
-            KeyboardState state = Keyboard.GetState();
             //movement with WASD
+            #region movevment
+            KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.W))
             {
                 playerRect.Y -= 5;
@@ -306,6 +309,8 @@ namespace Collision_Detection
             {
                 playerRect.X += 5;
             }
+            #endregion
+
             base.Update(gameTime);
         }
 
@@ -322,6 +327,7 @@ namespace Collision_Detection
 
             spriteBatch.Draw(player, playerRect, Color.White);
 
+            //draw each bread if their respective collected bool is false
             if (collected1 == false)
                 spriteBatch.Draw(collectable, collectableRect1, Color.White);
 
