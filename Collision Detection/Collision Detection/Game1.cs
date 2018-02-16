@@ -20,35 +20,14 @@ namespace Collision_Detection
         Texture2D player;
         Rectangle playerRect;
 
-        //create a list for collecting object
-        List<Rectangle> collect = new List<Rectangle>();
+        //create a list for the collectable rectangles and a parallel list of velocities as vector2s
+        List<Rectangle> collectRect = new List<Rectangle>();
+        List<Vector2> velocity = new List<Vector2>();
+       
 
-        //texture and rectangle for collectable, as well as positions for them
+        //texture for the collectable and the number of them
         Texture2D collectable;
-        Rectangle collectableRect1;
-        Rectangle collectableRect2;
-        Rectangle collectableRect3;
-        Rectangle collectableRect4;
-        Rectangle collectableRect5;
-
-        Vector2 position1;
-        Vector2 position2;
-        Vector2 position3;
-        Vector2 position4;
-        Vector2 position5;
-
-        //velocity for the rectangles to move at
-        Vector2 velocity1;
-        Vector2 velocity2;
-        Vector2 velocity3;
-        Vector2 velocity4;
-        Vector2 velocity5;
-
-        bool collected1 = false;
-        bool collected2 = false;
-        bool collected3 = false;
-        bool collected4 = false;
-        bool collected5 = false;
+        int numcollect = 5;
 
         public Game1()
         {
@@ -66,23 +45,23 @@ namespace Collision_Detection
         {
             // TODO: Add your initialization logic here
 
+            //change window size
             graphics.PreferredBackBufferWidth = 960;
             graphics.PreferredBackBufferHeight = 540;
             graphics.ApplyChanges();
 
+            //populate the list of collectable rectangles
+            for (int i = 0; i < numcollect; i++)
+            {
+                collectRect.Add(new Rectangle(CordX(), CordY(), 28, 25));
+            }
 
-            //add collectble rectangles to the collect list
-            collect.Add(collectableRect1);
-            collect.Add(collectableRect2);
-            collect.Add(collectableRect3);
-            collect.Add(collectableRect4);
-            collect.Add(collectableRect5);
+            //poplulate the list of velocities
+            for (int i = 0; i < numcollect; i++)
+            {
+                velocity.Add(new Vector2(1,1));
+            }
 
-            velocity1 = new Vector2(VelocityX(), VelocityY());
-            velocity2 = new Vector2(VelocityX(), VelocityY());
-            velocity3 = new Vector2(VelocityX(), VelocityY());
-            velocity4 = new Vector2(VelocityX(), VelocityY());
-            velocity5 = new Vector2(VelocityX(), VelocityY());
             base.Initialize();
         }
 
@@ -104,20 +83,8 @@ namespace Collision_Detection
                                             player.Width,
                                             player.Height);
 
-
-            //load the collectable and create locations for the collectable rectangles
+            //load the collectable
             collectable = Content.Load<Texture2D>("bread");
-            collectableRect1 = new Rectangle(CordX(), CordY(), collectable.Width, collectable.Height);
-            collectableRect2 = new Rectangle(CordX(), CordY(), collectable.Width, collectable.Height);
-            collectableRect3 = new Rectangle(CordX(), CordY(), collectable.Width, collectable.Height);
-            collectableRect4 = new Rectangle(CordX(), CordY(), collectable.Width, collectable.Height);
-            collectableRect5 = new Rectangle(CordX(), CordY(), collectable.Width, collectable.Height);
-
-            position1 = new Vector2(collectableRect1.X, collectableRect1.Y);
-            position2 = new Vector2(collectableRect2.X, collectableRect2.Y);
-            position3 = new Vector2(collectableRect3.X, collectableRect3.Y);
-            position4 = new Vector2(collectableRect4.X, collectableRect4.Y);
-            position5 = new Vector2(collectableRect5.X, collectableRect5.Y);
 
         }
 
@@ -142,153 +109,40 @@ namespace Collision_Detection
 
             // TODO: Add your update logic here
 
-            //changes each position by whatever it's velocity is every second
-            position1 += velocity1 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            position2 += velocity2 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            position3 += velocity3 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            position4 += velocity4 * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            position5 += velocity5 * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //create a new rectangle every frame that changes direction depending on it's velocity
+            for (int i = 0; i < numcollect; i++)
+            {
+                collectRect[i] = new Rectangle(collectRect[i].X + (int)velocity[i].X, collectRect[i].Y + (int)velocity[i].Y, collectable.Width, collectable.Height);
 
-            //set the X and Y for each collectable rect
-            #region changing coords
-            collectableRect1.X = (int)position1.X;
-            collectableRect1.Y = (int)position1.Y;
+                //bounds check for each bread rect
+                #region bounds check
+                if ((collectRect[i].Right >= GraphicsDevice.Viewport.Width) && (velocity[i].X == 1))
+                {
+                    Vector2 temp = velocity[i];
+                    temp.X *= -1;
+                    velocity[i] = temp;
+                }
+                if ((collectRect[i].Left <= 0) && (velocity[i].X == -1))
+                {
+                    Vector2 temp = velocity[i];
+                    temp.X *= -1;
+                    velocity[i] = temp;
+                }
+                if ((collectRect[i].Bottom >= GraphicsDevice.Viewport.Height) && (velocity[i].Y == 1))
+                {
+                    Vector2 temp = velocity[i];
+                    temp.Y *= -1;
+                    velocity[i] = temp;
+                }
+                if ((collectRect[i].Top <= 0) && (velocity[i].Y == -1))
+                {
+                    Vector2 temp = velocity[i];
+                    temp.Y *= -1;
+                    velocity[i] = temp;
+                }
+                #endregion
 
-            collectableRect2.X = (int)position2.X;
-            collectableRect2.Y = (int)position2.Y;
-
-            collectableRect3.X = (int)position3.X;
-            collectableRect3.Y = (int)position3.Y;
-
-            collectableRect4.X = (int)position4.X;
-            collectableRect4.Y = (int)position4.Y;
-
-            collectableRect5.X = (int)position5.X;
-            collectableRect5.Y = (int)position5.Y;
-            #endregion
-
-            #region bounds check for collectableRect1
-            if (collectableRect1.Left <= 0 && velocity1.X < 0)
-            {
-                velocity1.X *= -1;
             }
-            if (collectableRect1.Right >= GraphicsDevice.Viewport.Width && velocity1.X > 0)
-            {
-                velocity1.X *= -1;
-            }
-            if (collectableRect1.Top <= 0 && velocity1.Y < 0)
-            {
-                velocity1.Y *= -1;
-            }
-            if (collectableRect1.Bottom >= GraphicsDevice.Viewport.Height && velocity1.Y > 0)
-            {
-                velocity1.Y *= -1;
-            }
-            #endregion
-
-            #region bounds check for collectableRect2
-            if (collectableRect2.Left <= 0 && velocity2.X < 0)
-            {
-                velocity2.X *= -1;
-            }
-            if (collectableRect2.Right >= GraphicsDevice.Viewport.Width && velocity2.X > 0)
-            {
-                velocity2.X *= -1;
-            }
-            if (collectableRect2.Top <= 0 && velocity2.Y < 0)
-            {
-                velocity2.Y *= -1;
-            }
-            if (collectableRect2.Bottom >= GraphicsDevice.Viewport.Height && velocity2.Y > 0)
-            {
-                velocity2.Y *= -1;
-            }
-            #endregion
-
-            #region bounds check for collectableRect3
-            if (collectableRect3.Left <= 0 && velocity3.X < 0)
-            {
-                velocity3.X *= -1;
-            }
-            if (collectableRect3.Right >= GraphicsDevice.Viewport.Width && velocity3.X > 0)
-            {
-                velocity3.X *= -1;
-            }
-            if (collectableRect3.Top <= 0 && velocity3.Y < 0)
-            {
-                velocity3.Y *= -1;
-            }
-            if (collectableRect3.Bottom >= GraphicsDevice.Viewport.Height && velocity3.Y > 0)
-            {
-                velocity3.Y *= -1;
-            }
-            #endregion
-
-            #region bounds check for collectableRect4
-            if (collectableRect4.Left <= 0 && velocity4.X < 0)
-            {
-                velocity4.X *= -1;
-            }
-            if (collectableRect4.Right >= GraphicsDevice.Viewport.Width && velocity4.X > 0)
-            {
-                velocity4.X *= -1;
-            }
-            if (collectableRect4.Top <= 0 && velocity4.Y < 0)
-            {
-                velocity4.Y *= -1;
-            }
-            if (collectableRect4.Bottom >= GraphicsDevice.Viewport.Height && velocity4.Y > 0)
-            {
-                velocity4.Y *= -1;
-            }
-            #endregion
-
-            #region bounds check for collectableRect5
-            if (collectableRect5.Left <= 0 && velocity5.X < 0)
-            {
-                velocity5.X *= -1;
-            }
-            if (collectableRect5.Right >= GraphicsDevice.Viewport.Width && velocity5.X > 0)
-            {
-                velocity5.X *= -1;
-            }
-            if (collectableRect5.Top <= 0 && velocity5.Y < 0)
-            {
-                velocity5.Y *= -1;
-            }
-            if (collectableRect5.Bottom >= GraphicsDevice.Viewport.Height && velocity5.Y > 0)
-            {
-                velocity5.Y *= -1;
-            }
-            #endregion
-
-            //checks for collision. if collision, sets the appropriate collected bool to true
-            #region collision
-            if ((playerRect.Intersects(collectableRect1)) && (collected1 == false))
-            {
-                collected1 = true;
-            }
-
-            if ((playerRect.Intersects(collectableRect2)) && (collected2 == false))
-            {
-                collected2 = true;
-            }
-
-            if ((playerRect.Intersects(collectableRect3)) && (collected3 == false))
-            {
-                collected3 = true;
-            }
-
-            if ((playerRect.Intersects(collectableRect4)) && (collected4 == false))
-            {
-                collected4 = true;
-            }
-
-            if ((playerRect.Intersects(collectableRect5)) && (collected5 == false))
-            {
-                collected5 = true;
-            }
-            #endregion
 
             //movement with WASD
             #region movevment
@@ -325,23 +179,21 @@ namespace Collision_Detection
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
+            //draw the player
             spriteBatch.Draw(player, playerRect, Color.White);
 
-            //draw each bread if their respective collected bool is false
-            if (collected1 == false)
-                spriteBatch.Draw(collectable, collectableRect1, Color.White);
-
-            if (collected2 == false)
-                spriteBatch.Draw(collectable, collectableRect2, Color.White);
-
-            if (collected3 == false)
-                spriteBatch.Draw(collectable, collectableRect3, Color.White);
-
-            if (collected4 == false)
-                spriteBatch.Draw(collectable, collectableRect4, Color.White);
-
-            if (collected5 == false)
-                spriteBatch.Draw(collectable, collectableRect5, Color.White);
+            //draw each rectangle. if it intersects the player, give it a red color
+            #region draw rects
+            for (int i = 0; i < numcollect; i++)
+            {
+                if (collectRect[i].Intersects(playerRect))
+                    spriteBatch.Draw(collectable, collectRect[i], Color.Red);
+                else
+                {
+                    spriteBatch.Draw(collectable, collectRect[i], Color.White);
+                }
+            }
+            #endregion
 
             spriteBatch.End();
 
@@ -355,7 +207,7 @@ namespace Collision_Detection
         /// <returns></returns>
         int CordX()
         {
-            int width = RNG.Next(20,GraphicsDevice.Viewport.Width - collectable.Width - 20);
+            int width = RNG.Next(20,GraphicsDevice.Viewport.Width - 50);
             return width;
         }
 
@@ -365,40 +217,8 @@ namespace Collision_Detection
         /// <returns></returns>
         int CordY()
         {
-            int height = RNG.Next(20, GraphicsDevice.Viewport.Height - collectable.Height -20);
+            int height = RNG.Next(20, GraphicsDevice.Viewport.Height - 50);
             return height;
-        }
-        #endregion
-
-        #region random velocity
-        /// <summary>
-        /// get a random x value between 100 and 200 for velocity
-        /// </summary>
-        /// <returns></returns>
-        int VelocityX()
-        {
-            int VX = RNG.Next(100,201);
-            int negativeX = RNG.Next(1, 3);
-            if (negativeX == 2)
-            {
-                VX *= -1;
-            }
-            return VX;
-        }
-
-        /// <summary>
-        /// get a random Y value between 100 and 200 for velocity
-        /// </summary>
-        /// <returns></returns>
-        int VelocityY()
-        {
-            int VY = RNG.Next(100, 201);
-            int negativeY = RNG.Next(1, 3);
-            if (negativeY == 2)
-            {
-                VY *= -1;
-            }
-            return VY;
         }
         #endregion
 
