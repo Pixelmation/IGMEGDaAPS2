@@ -12,6 +12,9 @@ namespace H2_Game
     class Collectible : GameObject
     {
         Random RNG = new Random();
+        List<Rectangle> collectBox = new List<Rectangle>();
+        List<Vector2> velocity = new List<Vector2>();
+        List<bool> active = new List<bool>();
 
         public Collectible()
         {
@@ -19,15 +22,19 @@ namespace H2_Game
             spriteHeight = 25;
             spriteSpeed = 10;
 
+            location = new Vector2(XCoord(), 0-YCoord());
             position = new Rectangle((int)location.X, (int)location.Y, spriteWidth, spriteHeight);
-            location = new Vector2(10, 10);
         }
     
-        public void CMove()
+        public void popLists(int level)
         {
-            Vector2 temp = location;
-            temp.Y -= spriteSpeed;
-            location = temp;
+            for (int i = 0; i < level * 30; i++)
+            {
+                collectBox.Add(new Rectangle(XCoord(), 0-YCoord(), 30, 30));
+                velocity.Add(new Vector2(0, 0-speed()));
+                active.Add(true);
+            }
+
         }
 
         int XCoord()
@@ -36,9 +43,61 @@ namespace H2_Game
             return cord;
         }
 
-        public void DrawBread(SpriteBatch spriteBatch)
+        int YCoord()
         {
-            spriteBatch.Draw(spriteTexture, location, new Rectangle((int)location.X, (int)location.Y, spriteWidth, spriteHeight), Color.White);
+            int cord = RNG.Next(0, 200);
+            return cord;
+        }
+
+        int speed()
+        {
+            int num = RNG.Next(1,3);
+            return num;
+        }
+
+        public bool CheckCollision(int num, Player player)
+        {
+                if (player.position.Intersects(collectBox[num]))
+                {
+                    active[num] = false;
+                    return true;
+                }
+            
+                return false;
+        }
+
+        public void CheckCollectCollision(Player player)
+        {
+            for (int i = 0; i < player.level * 30; i++)
+            {
+                int num = i;
+                CheckCollision(num, player);
+            }
+        }
+        public void drawcollectables(int level, SpriteBatch spriteBatch)
+        {
+            for (int i = 0; i < level*30; i++)
+            {
+
+                if (active[i] == true)
+                {
+                    spriteBatch.Draw(spriteTexture, collectBox[i], Color.White);
+                }
+            }
+        }
+
+        public void MoveBread(int level)
+        {
+                for (int i = 0; i < level * 30; i++)
+                {
+                    if (active[i] == true)
+                    {
+                    Vector2 temp = collectBox[i].Location.ToVector2();
+                    temp -= velocity[i];
+                    collectBox[i] = new Rectangle((int)temp.X, (int)temp.Y, spriteWidth, spriteHeight);
+                    }
+                
+                }
         }
 
     }

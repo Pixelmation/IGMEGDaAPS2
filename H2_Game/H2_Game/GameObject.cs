@@ -30,8 +30,5 @@ namespace H2_Game
         {
             spriteBatch.Draw(spriteTexture, position, Color.White);
         }
-
-
     }
-
 }

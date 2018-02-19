@@ -21,7 +21,7 @@ namespace H2_Game
         SpriteBatch spriteBatch;
         KeyboardState currentKBState;
         Texture2D background;
-        PlayerState PState = new PlayerState();
+        //PlayerState PState = new PlayerState();
         Player player = new Player();
         Collectible bread = new Collectible();
         public Game1()
@@ -42,7 +42,7 @@ namespace H2_Game
             graphics.PreferredBackBufferWidth = 960;
             graphics.PreferredBackBufferHeight = 540;
             graphics.ApplyChanges();
-
+            bread.popLists(player.level);
             base.Initialize();
         }
 
@@ -81,12 +81,14 @@ namespace H2_Game
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            
+
             // TODO: Add your update logic here
-            HandleSpriteMovement(gameTime);
+            currentKBState = Keyboard.GetState();
+            player.HandleSpriteMovement(gameTime, currentKBState);
             player.Animate(gameTime);
             player.ScreenWrap();
-            bread.CMove();
+            bread.MoveBread(player.level);
+            bread.CheckCollectCollision(player);
             base.Update(gameTime);
         }
 
@@ -102,7 +104,7 @@ namespace H2_Game
             spriteBatch.Begin();
             spriteBatch.Draw(background, new Rectangle(0,0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
-            switch (PState)
+            switch (player.PState)
             {
                 case PlayerState.FaceLeft:
                     player.DrawScottStanding(spriteBatch, SpriteEffects.FlipHorizontally);
@@ -119,123 +121,10 @@ namespace H2_Game
                 default:
                     break;
             }
-            bread.DrawBread(spriteBatch);
+            bread.drawcollectables(player.level, spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
-        }
-
-
-
-
-        public void HandleSpriteMovement(GameTime gameTime)
-        {
-            currentKBState = Keyboard.GetState();
-
-            //switch to change PState depending on currentKBstae
-            #region Pstate
-            switch (PState)
-            {
-                case PlayerState.FaceLeft:
-                    //if left arrow is held, change state to walkleft
-                    if (currentKBState.IsKeyDown(Keys.A))
-                    {
-                        PState = PlayerState.WalkLeft;
-                    }
-
-                    //if right arrow is held, change state to walkright
-                    if (currentKBState.IsKeyDown(Keys.D))
-                    {
-                        PState = PlayerState.WalkRight;
-                    }
-                    break;
-                case PlayerState.FaceRight:
-                    //if left arrow is held, change state to walkleft
-                    if (currentKBState.IsKeyDown(Keys.A))
-                    {
-                        PState = PlayerState.WalkLeft;
-                    }
-
-                    //if right arrow is held, change state to walkright
-                    if (currentKBState.IsKeyDown(Keys.D))
-                    {
-                        PState = PlayerState.WalkRight;
-                    }
-                    break;
-                case PlayerState.WalkLeft:
-                    if (currentKBState.IsKeyUp(Keys.A) && currentKBState.IsKeyUp(Keys.D))
-                    {
-                        PState = PlayerState.FaceLeft;
-                    }
-
-                    //if left arrow is up and right arrow is down, change state to walkright
-                    if (currentKBState.IsKeyUp(Keys.A) && currentKBState.IsKeyDown(Keys.D))
-                    {
-                        PState = PlayerState.WalkRight;
-                    }
-                    break;
-                case PlayerState.WalkRight:
-                    if (currentKBState.IsKeyUp(Keys.A) && currentKBState.IsKeyUp(Keys.D))
-                    {
-                        PState = PlayerState.FaceRight;
-                    }
-
-                    //if left arrow is up and right arrow is down, change state to walkright
-                    if (currentKBState.IsKeyDown(Keys.A) && currentKBState.IsKeyUp(Keys.D))
-                    {
-                        PState = PlayerState.WalkLeft;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            #endregion
-
-            //sprint check
-            if (currentKBState.IsKeyDown(Keys.LeftShift))
-            {
-                player.spriteSpeed = 10;
-            }
-            if (currentKBState.IsKeyUp(Keys.LeftShift))
-            {
-                player.spriteSpeed = 5;
-            }
-
-            //call movement animation and set speed to zero if sprite will move offscreen
-            switch (PState)
-            {
-                case PlayerState.FaceLeft:
-                    player.currentFrame = 0;
-                    break;
-                case PlayerState.FaceRight:
-                    player.currentFrame = 0;
-                    break;
-                case PlayerState.WalkLeft:
-                    player.Animate(gameTime);
-                    break;
-                case PlayerState.WalkRight:
-                    player.Animate(gameTime);
-                    break;
-                default:
-                    break;
-            }
-
-            switch (PState)
-            {
-                case PlayerState.WalkLeft:
-                    Vector2 tempL = player.location;
-                    tempL.X -= player.spriteSpeed;
-                    player.location = tempL;
-                    break;
-                case PlayerState.WalkRight:
-                    Vector2 tempR = player.location;
-                    tempR.X += player.spriteSpeed;
-                    player.location = tempR;
-                    break;
-                default:
-                    break;
-            }
-        }
-        
+        }        
     }
 }
