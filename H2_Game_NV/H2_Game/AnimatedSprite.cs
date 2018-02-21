@@ -14,16 +14,9 @@ namespace H2_Game
         //create the playerstate
         public PlayerState PState = new PlayerState();
 
-        //variables for level, score, and a score within a level
-        #region variables
         public int level = 1;
         public int score = 0;
         public int scoreInLevel = 0;
-        #endregion
-
-        /// <summary>
-        /// constructor for player that sets sprite width, height, speed, the frame info, a timer, location, and position
-        /// </summary>
         public Player()
         {
             spriteWidth = 106;
@@ -48,11 +41,6 @@ namespace H2_Game
 
         //code for movement
         #region spriteMovement
-            /// <summary>
-            /// handles all of the player movement and the playerstate
-            /// </summary>
-            /// <param name="gameTime"></param>
-            /// <param name="currentKBState"></param>
         public void HandleSpriteMovement(GameTime gameTime, KeyboardState currentKBState)
         {
 
@@ -167,10 +155,8 @@ namespace H2_Game
         #endregion
 
 
-            /// <summary>
-            /// adds to the currentFrame and sets it to one once it reaches the frame count
-            /// </summary>
-            /// <param name="gameTime"></param>
+        //animate frames during movement
+        #region animate code
         public void Animate(GameTime gameTime)
         {
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -184,14 +170,13 @@ namespace H2_Game
                 timer -= timePerFrame;
             }
         }
+        #endregion
 
-        /// <summary>
-        /// wraps the player around the sreen once he's outside the bounds
-        /// </summary>
         public void ScreenWrap()
         {
             if (position.Left >= 960)
             {
+                //location = new Vector2(0 - position.Width, 305);
                 position = new Rectangle(1-spriteWidth, (int)location.Y, spriteWidth, spriteHeight);
             }
             if (position.Right <= 0)
@@ -201,21 +186,11 @@ namespace H2_Game
             }
         }
 
-        /// <summary>
-        /// draws scott standing
-        /// </summary>
-        /// <param name="spriteBatch"></param>
-        /// <param name="flipsprite"></param>
         public void DrawScottStanding(SpriteBatch spriteBatch, SpriteEffects flipsprite)
         {
             spriteBatch.Draw(spriteTexture, position, new Rectangle(0, 0, spriteWidth, spriteHeight), Color.White, 0f, Vector2.Zero, flipsprite, 0);
         }
 
-        /// <summary>
-        /// draws scott walking
-        /// </summary>
-        /// <param name="spriteBatch"></param>
-        /// <param name="flipsprite"></param>
         public void DrawScottWalking(SpriteBatch spriteBatch, SpriteEffects flipsprite)
         {
             spriteBatch.Draw(spriteTexture, position, new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight), Color.White, 0f, Vector2.Zero, flipsprite, 0);

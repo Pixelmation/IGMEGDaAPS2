@@ -127,9 +127,8 @@ namespace H2_Game
             // TODO: Add your update logic here
             //set currentKBState
             currentKBState = Keyboard.GetState();
-
+            
             //if gamestate is Menu, look for SingleKeyPress to equal true. once it does, enter the game and reset everything
-            #region Menu
             if (Gstate == GameState.Menu)
             {
                 SingleKeyPress(Keys.Enter);
@@ -139,10 +138,8 @@ namespace H2_Game
                     ResetGame();
                 }
             }
-            #endregion
 
-            //if gamestate is Game, load everything. 
-            #region GState Game
+            //if gamestate is Game, load everything. if timer = 0 or player intersects an enemy, change gamestate to gameover
             if (Gstate == GameState.Game)
             {
                 player.HandleSpriteMovement(gameTime, currentKBState);
@@ -152,24 +149,17 @@ namespace H2_Game
                 bread.CheckCollectCollision(player);
                 enemy.MoveEnemy(player.level);
                 timer -= 1 / 60f;
-
-                //if the player collects half of the bread onscreen, call next level
                 if (player.scoreInLevel == (bread.collectBox.Count / 2))
                 {
                     player.scoreInLevel = 0;
                     NextLevel();
                 }
-
-                //if timer = 0 or player intersects an enemy, change gamestate to gameover                
                 if (timer <= 0.00 || enemy.EnemyCollision(player, Gstate) == true)
                 {
                     Gstate = GameState.GameOver;
                 }
             }
-            #endregion
 
-            //if gamestate is gameover look for SingleKeyPress to equal true. once it does, return to Menu
-            #region Gstate GameOver
             if (Gstate == GameState.GameOver)
             {
                 SingleKeyPress(Keys.Enter);
@@ -179,9 +169,7 @@ namespace H2_Game
                     Gstate = GameState.Menu;
                 }
             }
-            #endregion
 
-            //set previousKBState to currentKBState
             previousKBState = currentKBState;
             base.Update(gameTime);
         }
@@ -189,46 +177,36 @@ namespace H2_Game
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>dADAAAAAAAAAAAAAAAAAAAAADDDDDDDDDDDDDDDDDDDDD
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-
-            //draw the background
             spriteBatch.Draw(background, new Rectangle(0,0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
 
-            //strings and their sizes
-            #region string variables
-            //strings and their sizes for the menu screen
             string welcome1 = "Welcome to breadcollector 2018!";
             string welcome2 = "Please press Enter to begin.";
             Vector2 welcome1Length = spriteFont.MeasureString(welcome1);
             Vector2 welcome2Length = spriteFont.MeasureString(welcome2);
 
-            //strings and their sizes for the game over screen
             string endString1 = "You lost! final score is:";
             string endString2 = player.score.ToString();
+
             Vector2 endString1Length = spriteFont.MeasureString(endString1);
             Vector2 endString2Length = spriteFont.MeasureString(endString2);
 
-            //formats the timer into a nicer format
-            string.Format("{0:0.00}", timer);
-            #endregion
 
-            //if gamestate is menu, draw the welcome and await statechange
-            #region draw menu
+            string.Format("{0:0.00}", timer);
+
             if (Gstate == GameState.Menu)
             {
                 spriteBatch.DrawString(spriteFont, welcome1, new Vector2(GraphicsDevice.Viewport.Width / 2- welcome1Length.X / 2 , GraphicsDevice.Viewport.Height / 2- welcome1Length.Y), Color.Black);
                 spriteBatch.DrawString(spriteFont, welcome2, new Vector2(GraphicsDevice.Viewport.Width / 2 - welcome2Length.X / 2, GraphicsDevice.Viewport.Height / 2+ welcome2Length.Y), Color.Black);
             }
-            #endregion
 
-            //if gamestate is game, draw the GUI and the game itself. player, collectables, and bugs
-            #region draw game
+
             if (Gstate == GameState.Game)
             {
                 spriteBatch.DrawString(spriteFont, player.level.ToString(), new Vector2(GraphicsDevice.Viewport.Width / 2, 10), Color.Black);
@@ -254,29 +232,17 @@ namespace H2_Game
                 bread.drawcollectables(player.level, spriteBatch);
                 enemy.DrawEnemy(player.level, spriteBatch);
             }
-            #endregion
 
-            //if gamestate is gameover, show the lost message and show their final score
-            #region draw gameover
             if (Gstate == GameState.GameOver)
             {
                 spriteBatch.DrawString(spriteFont, endString1, new Vector2(GraphicsDevice.Viewport.Width / 2 - endString1Length.X / 2, GraphicsDevice.Viewport.Height / 2 - endString1Length.Y), Color.Black);
                 spriteBatch.DrawString(spriteFont, endString2, new Vector2(GraphicsDevice.Viewport.Width / 2 - endString2Length.X / 2, GraphicsDevice.Viewport.Height / 2 + endString2Length.Y), Color.Black);
             }
-            #endregion
-
             spriteBatch.End();
 
             base.Draw(gameTime);
-        }
+        }        
 
-        //helper methods
-        #region helper methods
-        /// <summary>
-        /// check for enter to be pressed, and return true once it is
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
         bool SingleKeyPress(Keys key)
         {
             if (currentKBState.IsKeyDown(Keys.Enter) == true && previousKBState.IsKeyDown(Keys.Enter) == false)
@@ -286,9 +252,6 @@ namespace H2_Game
             return false;
         }
 
-        /// <summary>
-        /// resets all of the variables and calls next level
-        /// </summary>
         void ResetGame()
         {
             player.level = 0;
@@ -297,9 +260,6 @@ namespace H2_Game
             NextLevel();
         }
 
-        /// <summary>
-        /// adds to player level, resets timer, and resets the collectable and enemy lists as well as player location
-        /// </summary>
         void NextLevel()
         {
             player.level++;
@@ -313,6 +273,5 @@ namespace H2_Game
             enemy.popEnemy(player.level);
             player.location = new Vector2(480 - player.spriteWidth / 2, 305);
         }
-        #endregion
     }
 }
