@@ -52,7 +52,7 @@ namespace DictionaryVsList_Starter
 
             }
             //Adds each doubleword to a list then sets each of those words' values to true. Then calls Search()
-            if (answerChar == 'D')
+            else if (answerChar == 'D')
             {
                 foreach (KeyValuePair<string, bool> item in wordDictionary)
                 {
@@ -71,7 +71,12 @@ namespace DictionaryVsList_Starter
                 
                 Search(wordDictionary);
             }
-
+            else
+            {
+                Console.WriteLine("Incorrect entry.");
+                Console.WriteLine();
+                Main(args);
+            }
 
             // ...and here.
             // *********************
@@ -107,6 +112,7 @@ namespace DictionaryVsList_Starter
             }
             if (charYN == 'N')
             {
+                Console.WriteLine("Press any button to exit");
                 return;
             }
         }
