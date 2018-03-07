@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9C5CDC41-444C-4CE6-B0DD-D010A47A5940}</ProjectGuid>
+    <ProjectGuid>{EE59A6FF-039A-444D-8A54-CE501D5363B2}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Stacks_and_queues</RootNamespace>
-    <AssemblyName>Stacks_and_queues</AssemblyName>
+    <RootNamespace>DictionaryVsList_Starter</RootNamespace>
+    <AssemblyName>DictionaryVsList_Starter</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameQueue.cs" />
+    <Compile Include="PracticeExerciseFileReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

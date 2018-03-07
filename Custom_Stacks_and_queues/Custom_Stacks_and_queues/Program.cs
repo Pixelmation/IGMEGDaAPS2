@@ -4,15 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stacks_and_queues
+namespace Custom_Stacks_and_queues
 {
     class Program
     {
+        //create the stacks for part 2 and a startpage
         static Stack<String> ForwardHistory = new Stack<string>();
         static Stack<String> BackwardHistory = new Stack<string>();
         static string currentPage = "Google";
         static void Main(string[] args)
         {
+            //instantiate gameStack and gameQueue
             GameStack gameStack = new GameStack();
             GameQueue gameQueue = new GameQueue();
 
@@ -91,6 +93,7 @@ namespace Stacks_and_queues
             //store the current page as a string, defaults to Google on startup
             while (true)
             {
+                //display the possible controls
                 Console.WriteLine();
                 Console.WriteLine("Here are your possible controls:");
                 Console.WriteLine("1. visit a new webpage");
@@ -103,25 +106,30 @@ namespace Stacks_and_queues
                 int answerInt = 0;
                 int.TryParse(answer, out answerInt);
 
+                //switch to check each the answer and provide the appropriate method
                 switch (answerInt)
                 {
                     case 1:
                         currentPage = VisitPage(currentPage);
+                        Console.WriteLine("--------------------");
                         break;
                     case 2:
                         currentPage = NextPage(currentPage);
+                        Console.WriteLine("--------------------");
                         break;
                     case 3:
                         currentPage = PreviousPage(currentPage);
+                        Console.WriteLine("--------------------");
                         break;
                     case 4:
                         PrintEverything(currentPage);
+                        Console.WriteLine("--------------------");
                         break;
                     case 5:
                         return;
                     default:
-                        Console.WriteLine("Invalid Entry, please try again");
                         Console.WriteLine("--------------------");
+                        Console.WriteLine("Invalid Entry, please try again");
                         Console.WriteLine();
                         break;
                 }
@@ -150,10 +158,14 @@ namespace Stacks_and_queues
             return answer;
         }
 
-
+        /// <summary>
+        /// pushes the current page into the backHistory, and pops the first item in forwardHistory, returning it
+        /// </summary>
+        /// <param name="cPage"></param>
+        /// <returns></returns>
         static string NextPage(string cPage)
         {
-            if (ForwardHistory == null)
+            if (ForwardHistory.Count > 0)
             {
                 BackwardHistory.Push(cPage);
                 string answer = ForwardHistory.Pop();
@@ -163,24 +175,36 @@ namespace Stacks_and_queues
             return cPage;
         }
 
+        /// <summary>
+        /// pushes the current page into the fowardHistory, and pops the first item in backwardHistory, returning it
+        /// </summary>
+        /// <param name="cPage"></param>
+        /// <returns></returns>
         static string PreviousPage(string cPage)
         {
-            if (BackwardHistory != null)
+            if (BackwardHistory.Count > 0)
             {
                 ForwardHistory.Push(cPage);
                 string answer = BackwardHistory.Pop();
                 return answer;
             }
+            else
+            {
             Console.WriteLine("There is no backward history");
             return cPage;
+            }
         }
 
+        /// <summary>
+        /// prints the current page, then cycles through both stacks to print each item
+        /// </summary>
+        /// <param name="cPage"></param>
         static void PrintEverything(string cPage)
         {
             Console.WriteLine("Current page is " + cPage);
 
             Console.WriteLine();
-            if (BackwardHistory != null)
+            if (BackwardHistory.Count > 0)
             {
                 Console.WriteLine("This is your current Backward History:");
                 foreach (string item in BackwardHistory)
@@ -188,15 +212,23 @@ namespace Stacks_and_queues
                     Console.WriteLine(item);
                 }
             }
+            else
+            {
+                Console.WriteLine("There is no backward history");
+            }
 
             Console.WriteLine();
-            if (ForwardHistory != null)
+            if (ForwardHistory.Count > 0)
             {
                 Console.WriteLine("This is your current Forward History:");
                 foreach (string item in ForwardHistory)
                 {
                     Console.WriteLine(item);
                 }
+            }
+            else
+            {
+                Console.WriteLine("There is no forward history.");
             }
         }
         #endregion
