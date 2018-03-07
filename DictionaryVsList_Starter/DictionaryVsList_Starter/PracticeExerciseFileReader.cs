@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace DictionaryVsList_Starter
 {
@@ -12,11 +13,11 @@ namespace DictionaryVsList_Starter
 		private List<String> wordList;
 		private Dictionary<String, bool> wordDictionary;
 
-		// Add a field to hold StreamReader for file reading
-		// *********************
-		// Put your code between here...
+        // Add a field to hold StreamReader for file reading
+        // *********************
+        // Put your code between here...
 
-
+        StreamReader reader;
 
 		// ...and here.
 		// *********************
@@ -41,27 +42,29 @@ namespace DictionaryVsList_Starter
 			wordList = new List<string>();
 			wordDictionary = new Dictionary<string, bool>();
 
-			// Initialize the StreamReader
-			// *********************
-			// Put your code between here...
+            // Initialize the StreamReader
+            // *********************
+            // Put your code between here...
 
+            reader = new StreamReader("words.txt");
 
+            // ...and here.
+            // *********************
 
-			// ...and here.
-			// *********************
-
-
-			try
+            try
 			{
-				// Open the file and read it into both the list and dictionary
+                // Open the file and read it into both the list and dictionary
 
-				// *********************
-				// Put your code between here...
+                // *********************
+                // Put your code between here...
 
-
-
-
-
+                var text = File.ReadAllLines("words.txt");
+                foreach (var item in text)
+                {
+                    wordList.Add(item);
+                    wordDictionary.Add(item, false);
+                }
+                
 				// ...and here.
 				// *********************
 			}
@@ -72,12 +75,12 @@ namespace DictionaryVsList_Starter
 			}
 			finally
 			{
-				// Close the reader 
+                // Close the reader 
 
-				// *********************
-				// Put your code between here...
+                // *********************
+                // Put your code between here...
 
-
+                reader.Close();
 
 				// ...and here.
 				// *********************

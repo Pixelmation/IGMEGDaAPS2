@@ -11,9 +11,15 @@ namespace H2_Game
 {
     class Enemy : GameObject
     {
+        //lists for the enemy rectangles and velocities for them
+        #region lists
         public List<Rectangle> EnemyBox = new List<Rectangle>();
         public List<Vector2> Enemyvelocity = new List<Vector2>();
+        #endregion
 
+        /// <summary>
+        /// constructor for Enemy that sets sprite width, height, location, and position
+        /// </summary>
         public Enemy()
         {
             spriteWidth = 32;
@@ -23,6 +29,10 @@ namespace H2_Game
             position = new Rectangle((int)location.X, (int)location.Y, spriteWidth, spriteHeight);
         }
 
+        /// <summary>
+        /// populates the relevant lists x times, where x is whatever player.level is
+        /// </summary>
+        /// <param name="level"></param>
         public void popEnemy(int level)
         {
             for (int i = 0; i < level; i++)
@@ -32,6 +42,12 @@ namespace H2_Game
             }
         }
 
+        /// <summary>
+        /// checks for collision between player and enemy
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="Gstate"></param>
+        /// <returns></returns>
         public bool EnemyCollision(Player player, GameState Gstate)
         {
             for (int i = 0; i < EnemyBox.Count; i++)
@@ -44,6 +60,10 @@ namespace H2_Game
                 return false;
         }
 
+        /// <summary>
+        /// moves each enemy down in respect to their relative velocity
+        /// </summary>
+        /// <param name="level"></param>
         public void MoveEnemy(int level)
         {
             for (int i = 0; i < level; i++)
@@ -55,6 +75,11 @@ namespace H2_Game
             }
         }
 
+        /// <summary>
+        /// draws each enemy x times, where x is the player.level
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="spriteBatch"></param>
         public void DrawEnemy(int level, SpriteBatch spriteBatch)
         {
             for (int i = 0; i < level; i++)
