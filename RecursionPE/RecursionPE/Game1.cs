@@ -45,6 +45,7 @@ namespace RecursionPE
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
             //Load image
             image = Content.Load<Texture2D>("mario");
 
@@ -85,28 +86,41 @@ namespace RecursionPE
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
+            //calls the draw method
+            DrawRecursiveThing(0,0,image.Width,image.Height, Color.White);
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
 
-        void DrawRecursiveThing(int x, int y, int width, int height, Color color)
+        /// <summary>
+        /// Draws stuff in a diagonal pattern until width is less than 100
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        int DrawRecursiveThing(int x, int y, int width, int height, Color color)
         {
-            if (width <=20 || height <= 20)
+            if (width <=100)
             {
-                return;
+                return 1;
             }
             else
             {
-                spriteBatch.Draw(image, new Rectangle(x,y, width, height), color);
+                spriteBatch.Draw(image, new Rectangle(x, y, width, height), color);
 
                 if (color == Color.White)
                 {
-                    DrawRecursiveThing(x + image.Width, y + image.Height, image.Width / 2, image.Height / 2, Color.Green);
+                    color = Color.Green;
                 }
-                else if (color == Color.Green)
+                else
                 {
-                    DrawRecursiveThing(x+image.Width, y+image.Height, image.Width/2,image.Height/2, Color.White);
+                    color = Color.White;
                 }
+                return DrawRecursiveThing(x + (width / 2), y + (height / 2), width / 2, height / 2, color) + DrawRecursiveThing(x, y, width / 2, height / 2, color) + 1;
             }
         }
 
