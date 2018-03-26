@@ -104,7 +104,7 @@ namespace RecursionPE
         /// <returns></returns>
         int DrawRecursiveThing(int x, int y, int width, int height, Color color)
         {
-            if (width <=1)
+            if (width <=100)
             {
                 return 1;
             }
