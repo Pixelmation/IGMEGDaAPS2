@@ -10,6 +10,7 @@ namespace LinkedListsPE_NV
     {
         static void Main(string[] args)
         {
+            //instantiate CustomLinkedList and add 5 items
             CustomLinkedList CL = new CustomLinkedList();
             CL.Add("Magic The Gathering");
             CL.Add("Pokemon");
@@ -17,14 +18,22 @@ namespace LinkedListsPE_NV
             CL.Add("Yu-Gi-Oh");
             CL.Add("Vanguard");
 
+            /*
+            //allow to the user to ask repeatedly for data.
             while (true)
             {
                 Console.Write("please choose a number between 1 and {0} to get the index of: ", CL.Count);
                 string answer = Console.ReadLine();
                 int answer2 = -1;
                 int.TryParse(answer, out answer2);
-                CL.GetData(answer2);
-                Console.WriteLine();
+                Console.WriteLine(CL.GetData(answer2));
+            }
+            */
+
+            //cycle through each node and print it
+            for (int i = 0; i < CL.Count; i++)
+            {
+                Console.WriteLine((i+1) + ": " + CL.GetData(i+1));
             }
         }
     }
