@@ -19,7 +19,7 @@ namespace LinkedListsPE_NV
 
             while (true)
             {
-                Console.Write("please choose a number between 1 and 5 to get the index of: ");
+                Console.Write("please choose a number between 1 and {0} to get the index of: ", CL.Count);
                 string answer = Console.ReadLine();
                 int answer2 = -1;
                 int.TryParse(answer, out answer2);

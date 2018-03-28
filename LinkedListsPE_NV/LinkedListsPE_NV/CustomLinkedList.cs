@@ -8,8 +8,9 @@ namespace LinkedListsPE_NV
 {
     class CustomLinkedList
     {
-        CustomLinkedNode head;
+        CustomLinkedNode head = new CustomLinkedNode("");
         int count = 0;
+        public int Count { get => count; set => count=value; }
 
         public void Add(string data)
         {
@@ -24,8 +25,17 @@ namespace LinkedListsPE_NV
                 Console.WriteLine("invalid entry");
                 return;
             }
-            CustomLinkedNode current = head;
+
+            ☺CustomLinkedNode current = head;
+            /*
             while (current.Next != null)
+            {
+                current = current.Next;
+
+            }
+            */
+
+            for (int i = 0; i < Count; i++)
             {
                 current = current.Next;
             }
