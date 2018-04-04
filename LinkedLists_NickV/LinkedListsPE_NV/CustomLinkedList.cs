@@ -9,7 +9,7 @@ namespace LinkedListsPE_NV
     class CustomLinkedList
     {
         //instantiate head with a null string
-        CustomLinkedNode head = new CustomLinkedNode("");
+        CustomLinkedNode head = null;
 
         //count of the number of nodes
         int count = 0;
@@ -62,16 +62,39 @@ namespace LinkedListsPE_NV
 
             else
             {
-                //sets the current value to head
+                //sets the current value to head                
                 CustomLinkedNode current = head;
 
                 //cycles through each option until it hits whatever index was, then returns it
-                for (int i = 0; i < index; i++)
+                for (int i = 0; i < index-1; i++)
                 {
                     current = current.Next;
                 }
                 return current.Data;
             }
         }
+
+        /*
+        public string RemoveAt(int index)
+        {
+            if (index <= 0 || index > count)
+            {
+                return "invalid entry\n";
+            }
+            else if (count == 1)
+            {
+
+            }
+            else if (index == count)
+            {
+
+            }
+            else
+            {
+
+            }
+            */
+
+        
     }
 }

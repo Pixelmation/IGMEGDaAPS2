@@ -15,14 +15,15 @@ namespace LinkedListsPE_NV
             CL.Add("Magic The Gathering");
             CL.Add("Pokemon");
             CL.Add("Yugioh");
-            CL.Add("Yu-Gi-Oh");
+            CL.Add("buddyfight");
             CL.Add("Vanguard");
 
-            /*
+            
             //allow to the user to ask repeatedly for data.
+            /*
             while (true)
             {
-                Console.Write("please choose a number between 1 and {0} to get the index of: ", CL.Count);
+                Console.Write("please choose a number between 1 and {0} to remove an item: ", CL.Count);
                 string answer = Console.ReadLine();
                 int answer2 = -1;
                 int.TryParse(answer, out answer2);
