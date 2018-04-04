@@ -12,18 +12,6 @@ namespace LinkedListsPE_NV
         {
             //instantiate CustomLinkedList and Random
             CustomLinkedList CL = new CustomLinkedList();
-<<<<<<< HEAD
-            CL.Add("Magic The Gathering");
-            CL.Add("Pokemon");
-            CL.Add("Yugioh");
-            CL.Add("Hearthstone");
-            CL.Add("buddyfight");
-            CL.Add("Vanguard");
-
-
-            //allow to the user to ask repeatedly for data.
-            /*
-=======
             Random rng = new Random();
 
             //populates the list with 6 numbers so it's easy to tell if stuff has been switched or removed
@@ -36,7 +24,6 @@ namespace LinkedListsPE_NV
             CL.Add("6");
             #endregion
 
->>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
             while (true)
             {
                 #region list commands
@@ -49,19 +36,12 @@ namespace LinkedListsPE_NV
                                   "remove         - randomly remove one element from the list\n" +
                                   "backwards      - prints each item in reverse order\n" +
                                   "scramble       - removes a random piece of data from the list, then randomly reinserts it\n" +
-                                  "anything else will be added to teh end of the list\n");
+                                  "anything else will be added to the end of the list\n");
                 Console.Write("please choose one: ");
                 string answer = Console.ReadLine();
                 answer = answer.ToLower();
                 #endregion
 
-<<<<<<< HEAD
-            //cycle through each node and print it
-                Console.WriteLine("The List:");
-            for (int i = 0; i < CL.Count; i++)
-            {
-                Console.WriteLine((i+1) + ": " + CL.GetData(i+1));
-=======
                 #region the switch
                 switch (answer)
                 {
@@ -93,7 +73,7 @@ namespace LinkedListsPE_NV
                         break;
 
                     //removes something at random
-                    case "remove":                       
+                    case "remove":
                         int randNumRemove = rng.Next(0, CL.Count);
                         CL.Remove(randNumRemove);
                         Console.WriteLine("a random element was removed!\n");
@@ -105,11 +85,11 @@ namespace LinkedListsPE_NV
                         CL.PrintReversed();
                         Console.WriteLine();
                         break;
-                        
+
                     //randomly removes then reinserts an item
                     case "scramble":
                         int randNumScramble1 = rng.Next(0, CL.Count);
-                        int randNumScramble2 = rng.Next(0, CL.Count - 1);                        
+                        int randNumScramble2 = rng.Next(0, CL.Count - 1);
                         CL.Insert(CL.Remove(randNumScramble1), randNumScramble2);
                         Console.WriteLine("a random item has been removed and put back in randomly\n");
                         break;
@@ -118,29 +98,11 @@ namespace LinkedListsPE_NV
                     default:
                         CL.Add(answer);
                         Console.WriteLine(answer + " has been added to the end of the list!");
-                        break;                    
+                        break;
                 }
                 #endregion
->>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
-            }
 
-            //repeatedly asks to have you remove a node
-            while (true)
-            {
-                Console.WriteLine();
-                Console.Write("Please select an index to remove: ");
-                string answer = Console.ReadLine();
-                int answer2 = -1;
-                int.TryParse(answer, out answer2);
-                Console.WriteLine("removed item: " + CL.RemoveAt(answer2 - 1));
 
-                Console.WriteLine();
-
-                //cycles through each node and prints it
-                for (int i = 0; i < CL.Count; i++)
-                {
-                    Console.WriteLine((i + 1) + ": " + CL.GetData(i + 1));
-                }
             }
         }
     }

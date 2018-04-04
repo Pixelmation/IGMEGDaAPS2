@@ -16,11 +16,7 @@ namespace LinkedListsPE_NV
         int count = 0;
         public int Count { get => count; set => count = value; }
 
-<<<<<<< HEAD
         //create a new node and add it to the end
-=======
-        //create a new node and add it at the specified index
->>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
         #region Add
         /// <summary>
         /// Method to call when adding data, passing in whatever that data is
@@ -40,10 +36,7 @@ namespace LinkedListsPE_NV
                 //create a new CustomLinkedNode, then set it as tail.Next and then as the new tail
                 CustomLinkedNode willAdd = new CustomLinkedNode(data);
                 tail.Next = willAdd;
-<<<<<<< HEAD
-=======
                 willAdd.Previous = tail;
->>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
                 tail = tail.Next;
             }
 
@@ -82,23 +75,14 @@ namespace LinkedListsPE_NV
         }
         #endregion
 
-<<<<<<< HEAD
-        //removes specified nodes
-        #region RemoveAt method
-=======
         //removes a node at the index
         #region Remove
->>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
         /// <summary>
         /// removes the node at the index
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-<<<<<<< HEAD
-        public string RemoveAt(int index)
-=======
         public string Remove(int index)
->>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
         {
             //returns an invalid entry if it's outside of the scope of count
             if (index < 0 || index > count - 1)
@@ -119,7 +103,6 @@ namespace LinkedListsPE_NV
             //if they chose the last node, then remove tail and set the node before it to the new tail
             else if (index == count)
             {
-<<<<<<< HEAD
                 CustomLinkedNode temp = tail;
                 tail = null;
 
@@ -137,7 +120,6 @@ namespace LinkedListsPE_NV
             //if there is only one node, then set both head and tail to null
             else if(count == 1)
             {
-=======
                 //temporarily stores tail to be returned
                 CustomLinkedNode temp = tail;
                 tail = null;
@@ -158,7 +140,6 @@ namespace LinkedListsPE_NV
             //if there is only one node, then set both head and tail to null
             else if(count == 1)
             {                
->>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
                 CustomLinkedNode temp = tail;
                 head = null;
                 tail = null;
@@ -175,24 +156,15 @@ namespace LinkedListsPE_NV
                 {
                     current = current.Next;
                 }
-<<<<<<< HEAD
-                CustomLinkedNode temp = current.Next;               
-                current.Next = current.Next.Next;
-                count--;
-                return temp.Data;
-=======
                 CustomLinkedNode removed = current.Next;               
                 current.Next = current.Next.Next;
                 current.Next.Previous = current;
                 count--;
                 return removed.Data;
->>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
             }
         }
         #endregion
 
-<<<<<<< HEAD
-=======
         //inserts a node at the index
         #region Insert
         /// <summary>
@@ -271,6 +243,5 @@ namespace LinkedListsPE_NV
             }
         }
         #endregion
->>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
     }
 }
