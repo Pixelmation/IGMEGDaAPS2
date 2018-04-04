@@ -17,6 +17,13 @@ namespace LinkedListsPE_NV
         CustomLinkedNode next;
         public CustomLinkedNode Next { get => next; set => next = value; }
 
+<<<<<<< HEAD
+=======
+        //previous and it's property
+        CustomLinkedNode previous;
+        public CustomLinkedNode Previous { get => previous; set => previous = value; }
+
+>>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
         //tail and it's property
         CustomLinkedNode tail;
         public CustomLinkedNode Tail { get => tail; set => tail = value; }
@@ -30,6 +37,10 @@ namespace LinkedListsPE_NV
         {
             Data = data;
             Next = null;
+<<<<<<< HEAD
+=======
+            Previous = null; 
+>>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
             Tail = null;
         }
     }

@@ -16,7 +16,11 @@ namespace LinkedListsPE_NV
         int count = 0;
         public int Count { get => count; set => count = value; }
 
+<<<<<<< HEAD
         //create a new node and add it to the end
+=======
+        //create a new node and add it at the specified index
+>>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
         #region Add
         /// <summary>
         /// Method to call when adding data, passing in whatever that data is
@@ -36,6 +40,10 @@ namespace LinkedListsPE_NV
                 //create a new CustomLinkedNode, then set it as tail.Next and then as the new tail
                 CustomLinkedNode willAdd = new CustomLinkedNode(data);
                 tail.Next = willAdd;
+<<<<<<< HEAD
+=======
+                willAdd.Previous = tail;
+>>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
                 tail = tail.Next;
             }
 
@@ -74,14 +82,23 @@ namespace LinkedListsPE_NV
         }
         #endregion
 
+<<<<<<< HEAD
         //removes specified nodes
         #region RemoveAt method
+=======
+        //removes a node at the index
+        #region Remove
+>>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
         /// <summary>
         /// removes the node at the index
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
+<<<<<<< HEAD
         public string RemoveAt(int index)
+=======
+        public string Remove(int index)
+>>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
         {
             //returns an invalid entry if it's outside of the scope of count
             if (index < 0 || index > count - 1)
@@ -102,6 +119,7 @@ namespace LinkedListsPE_NV
             //if they chose the last node, then remove tail and set the node before it to the new tail
             else if (index == count)
             {
+<<<<<<< HEAD
                 CustomLinkedNode temp = tail;
                 tail = null;
 
@@ -119,6 +137,28 @@ namespace LinkedListsPE_NV
             //if there is only one node, then set both head and tail to null
             else if(count == 1)
             {
+=======
+                //temporarily stores tail to be returned
+                CustomLinkedNode temp = tail;
+                tail = null;
+
+                //sets current to head
+                CustomLinkedNode current = head;
+
+                //cycles to the end then sets the last item to tail
+                while (current.Next != tail)
+                {
+                    current = current.Next;
+                }
+                current = tail;
+                count--;
+                return temp.Data;
+            }
+
+            //if there is only one node, then set both head and tail to null
+            else if(count == 1)
+            {                
+>>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
                 CustomLinkedNode temp = tail;
                 head = null;
                 tail = null;
@@ -135,13 +175,102 @@ namespace LinkedListsPE_NV
                 {
                     current = current.Next;
                 }
+<<<<<<< HEAD
                 CustomLinkedNode temp = current.Next;               
                 current.Next = current.Next.Next;
                 count--;
                 return temp.Data;
+=======
+                CustomLinkedNode removed = current.Next;               
+                current.Next = current.Next.Next;
+                current.Next.Previous = current;
+                count--;
+                return removed.Data;
+>>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
             }
         }
         #endregion
 
+<<<<<<< HEAD
+=======
+        //inserts a node at the index
+        #region Insert
+        /// <summary>
+        /// inserts a new node into the middle
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="index"></param>
+        public void Insert(string data, int index)
+        {
+            //says invalid if index is negative
+            if (index < 0)
+            {
+                Console.WriteLine("invalid entry\n");
+            }
+            //if index is equal to or greater than count, just use add
+            else if (index >= count)
+            {
+                Add(data);
+                Console.WriteLine(data + " has been added!");
+                Console.WriteLine();
+            }
+            //otherwise add it to the middle
+            else
+            {
+                //creates a new node for the entry
+                CustomLinkedNode willAdd = new CustomLinkedNode(data);
+
+                //sets the current value to head                
+                CustomLinkedNode current = head;
+
+                //inserts the data into whatever index is and fixes attachments
+                for (int i = 0; i < index - 1; i++)
+                {
+                    current = current.Next;
+                }
+                current.Next.Previous = willAdd;
+                willAdd.Next = current.Next;
+                willAdd.Previous = current;
+                current.Next = willAdd;
+                count++;
+            }
+        }
+        #endregion
+
+        //clears the list
+        #region Clear
+        /// <summary>
+        /// calls the return method 
+        /// </summary>
+        public void Clear()
+        {
+            //remove i as it increases, and subtract 1 from i until it reaches 0
+            for (int i = 0; i < count; i++)
+            {                
+                Remove(i);
+                i--;
+            }            
+        }
+        #endregion
+
+        //Prints the list backwards
+        #region PrintReversed
+        /// <summary>
+        /// Prints the current list in reverse
+        /// </summary>
+        public void PrintReversed()
+        {
+            //Setup a current node to be tail
+            CustomLinkedNode current = tail;
+
+            //cycles through backwards, printing each one
+            for (int i = 0; i < Count; i++)
+            {
+                Console.WriteLine((Count - i) + ": " + current.Data);
+                current = current.Previous;
+            }
+        }
+        #endregion
+>>>>>>> 52c6207b6bc216a3d166d35b3eeb78894bb6ed6b
     }
 }
