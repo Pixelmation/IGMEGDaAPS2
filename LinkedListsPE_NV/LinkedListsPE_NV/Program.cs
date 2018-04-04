@@ -15,10 +15,11 @@ namespace LinkedListsPE_NV
             CL.Add("Magic The Gathering");
             CL.Add("Pokemon");
             CL.Add("Yugioh");
+            CL.Add("Hearthstone");
             CL.Add("buddyfight");
             CL.Add("Vanguard");
 
-            
+
             //allow to the user to ask repeatedly for data.
             /*
             while (true)
@@ -32,9 +33,29 @@ namespace LinkedListsPE_NV
             */
 
             //cycle through each node and print it
+                Console.WriteLine("The List:");
             for (int i = 0; i < CL.Count; i++)
             {
                 Console.WriteLine((i+1) + ": " + CL.GetData(i+1));
+            }
+
+            //repeatedly asks to have you remove a node
+            while (true)
+            {
+                Console.WriteLine();
+                Console.Write("Please select an index to remove: ");
+                string answer = Console.ReadLine();
+                int answer2 = -1;
+                int.TryParse(answer, out answer2);
+                Console.WriteLine("removed item: " + CL.RemoveAt(answer2 - 1));
+
+                Console.WriteLine();
+
+                //cycles through each node and prints it
+                for (int i = 0; i < CL.Count; i++)
+                {
+                    Console.WriteLine((i + 1) + ": " + CL.GetData(i + 1));
+                }
             }
         }
     }
