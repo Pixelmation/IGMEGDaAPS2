@@ -56,12 +56,12 @@ namespace TalentTree_PE
             //recursively goes through each node
             if (LeftNode != null)
             {
-                LeftNode.ListKnownClasses();
+                LeftNode.ListAllClasses();
             }
 
             if (RightNode != null)
             {
-                RightNode.ListKnownClasses();
+                RightNode.ListAllClasses();
             }
 
         }
