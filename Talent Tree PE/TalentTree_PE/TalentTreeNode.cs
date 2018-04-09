@@ -8,7 +8,6 @@ namespace TalentTree_PE
 {
     class TalentTreeNode
     {
-        #region Properties
         //Name and it's property
         string name;
         public string Name { get => name; set => name = value; }
@@ -24,16 +23,7 @@ namespace TalentTree_PE
         //RightNode and it's property
         TalentTreeNode rightNode;
         public TalentTreeNode RightNode { get => rightNode; set => rightNode = value; }
-        #endregion
 
-        #region constructor
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="learned"></param>
-        /// <param name="leftNode"></param>
-        /// <param name="rightNode"></param>
         public TalentTreeNode(string name, bool learned, TalentTreeNode leftNode, TalentTreeNode rightNode)
         {
             Name = name;
@@ -41,19 +31,12 @@ namespace TalentTree_PE
             LeftNode = null;
             RightNode = null;
         }
-        #endregion
 
-        #region Methods
 
-        #region all classes
-        /// <summary>
-        /// prints every node
-        /// </summary>
         public void ListAllClasses()
         {
             Console.WriteLine(this.Name);
 
-            //recursively goes through each node
             if (LeftNode != null)
             {
                 LeftNode.ListKnownClasses();
@@ -65,17 +48,12 @@ namespace TalentTree_PE
             }
 
         }
-        #endregion
 
-        #region Known classes
-        /// <summary>
-        /// prints each node that is set to true
-        /// </summary>
         public void ListKnownClasses()
         {
-                //recursive case
             if (this.Learned)
             {
+
                 Console.WriteLine(this.Name);
 
                 if (LeftNode != null)
@@ -88,22 +66,14 @@ namespace TalentTree_PE
                     RightNode.ListKnownClasses();
                 }
             }
-
-            //base case
             else
             {
 
             }
         }
-        #endregion
 
-        #region possible classes
-        /// <summary>
-        /// Searches each node, if the left or Right node is not learned and current is, then print the left or right node
-        /// </summary>
         public void ListPossibleClasses()
         {
-            //if learned, go to the next node
             if (LeftNode != null && LeftNode.Learned)
             {
                 LeftNode.ListPossibleClasses();
@@ -113,7 +83,6 @@ namespace TalentTree_PE
                 RightNode.ListPossibleClasses();
             }
 
-            //if next nodes aren't known, print them
             if (LeftNode != null && LeftNode.Learned != true)
             {
                 Console.WriteLine(LeftNode.Name);
@@ -125,8 +94,5 @@ namespace TalentTree_PE
                 RightNode.ListPossibleClasses();
             }
         }
-        #endregion
-
-        #endregion
     }
 }
