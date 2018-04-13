@@ -32,15 +32,13 @@ namespace DynamicTreeStarterCode
             if (root == null)
             {
                 root = new TreeNode(data);
-                return;
+
             }
             else
             {
-                TreeNode node = new TreeNode(data);
-                Insert(data, node);
+                //TreeNode node = new TreeNode(data);
+                Insert(data, root);
             }
-
-
 		}
 
 		/// <summary>
@@ -51,11 +49,31 @@ namespace DynamicTreeStarterCode
 		private void Insert(int data, TreeNode node)
 		{
             // *** Fill in this method ****************************************
-            node = root;
-            if (data < root.Data)
+            //if the node.left is null, set the new data as the new node.left
+            if (data < node.Data)
             {
-
+                if (node.Left == null)
+                {
+                    node.Left = new TreeNode(data);
+                }
+                else
+                {
+                    Insert(data, node.Left);
+                }
             }
-		}
+
+            //if the node.right is null, set the new data as the new node.right
+            if (data >= node.Data)
+            {
+                if (node.Right == null)
+                {
+                    node.Right = new TreeNode(data);
+                }
+                else
+                {
+                    Insert(data, node.Right);
+                }
+            }
+        }
 	}
 }

@@ -52,8 +52,40 @@ namespace DynamicTreeStarterCode
 			treeGreen = new Tree(spriteBatch, Color.Green);
 			treeBlue = new Tree(spriteBatch, Color.DodgerBlue);
 
-			// *** FILL EACH TREE WITH DATA HERE ***************************
-			
+            // *** FILL EACH TREE WITH DATA HERE ***************************
+            Random rng = new Random();
+
+            //draw the red tree with random data, making a somewhat balenced tree
+            for (int i = 0; i < 100; i++)
+            {
+                if (i != 0)
+                {
+                    treeRed.Insert(rng.Next(0,100));
+                }
+                else
+                {
+                    treeRed.Insert(50);
+                }
+            }
+
+            //draw the green tree with the same data every time, making a circle
+            for (int i = 0; i < 100; i++)
+            {
+                treeGreen.Insert(1);
+            }
+
+            //draw the blue tree with a 5/6 chance of going to the right
+            for (int i = 0; i < 100; i++)
+            {
+                if (i != 0)
+                {
+                    treeBlue.Insert(rng.Next(45,52));
+                }
+                else
+                {
+                    treeBlue.Insert(50);
+                }
+            }
 
 		}
 
