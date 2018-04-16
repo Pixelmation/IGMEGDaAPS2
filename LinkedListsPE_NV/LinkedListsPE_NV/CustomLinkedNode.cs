@@ -17,6 +17,11 @@ namespace LinkedListsPE_NV
         CustomLinkedNode next;
         public CustomLinkedNode Next { get => next; set => next = value; }
 
+        //tail and it's property
+        CustomLinkedNode tail;
+        public CustomLinkedNode Tail { get => tail; set => tail = value; }
+
+
         /// <summary>
         /// constructor that sets Data and Next to default values
         /// </summary>
@@ -25,6 +30,7 @@ namespace LinkedListsPE_NV
         {
             Data = data;
             Next = null;
+            Tail = null;
         }
     }
 }

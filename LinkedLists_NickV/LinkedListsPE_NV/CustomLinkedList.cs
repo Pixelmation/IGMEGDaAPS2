@@ -16,7 +16,7 @@ namespace LinkedListsPE_NV
         int count = 0;
         public int Count { get => count; set => count = value; }
 
-        //create a new node and add it at the specified index
+        //create a new node and add it to the end
         #region Add
         /// <summary>
         /// Method to call when adding data, passing in whatever that data is
@@ -102,6 +102,23 @@ namespace LinkedListsPE_NV
 
             //if they chose the last node, then remove tail and set the node before it to the new tail
             else if (index == count)
+            {
+                CustomLinkedNode temp = tail;
+                tail = null;
+
+                CustomLinkedNode current = head;
+
+                while (current.Next != tail)
+                {
+                    current = current.Next;
+                }
+                current = tail;
+                count--;
+                return temp.Data;
+            }
+
+            //if there is only one node, then set both head and tail to null
+            else if(count == 1)
             {
                 //temporarily stores tail to be returned
                 CustomLinkedNode temp = tail;

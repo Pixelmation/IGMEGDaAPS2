@@ -36,7 +36,7 @@ namespace LinkedListsPE_NV
                                   "remove         - randomly remove one element from the list\n" +
                                   "backwards      - prints each item in reverse order\n" +
                                   "scramble       - removes a random piece of data from the list, then randomly reinserts it\n" +
-                                  "anything else will be added to teh end of the list\n");
+                                  "anything else will be added to the end of the list\n");
                 Console.Write("please choose one: ");
                 string answer = Console.ReadLine();
                 answer = answer.ToLower();
@@ -73,7 +73,7 @@ namespace LinkedListsPE_NV
                         break;
 
                     //removes something at random
-                    case "remove":                       
+                    case "remove":
                         int randNumRemove = rng.Next(0, CL.Count);
                         CL.Remove(randNumRemove);
                         Console.WriteLine("a random element was removed!\n");
@@ -85,11 +85,11 @@ namespace LinkedListsPE_NV
                         CL.PrintReversed();
                         Console.WriteLine();
                         break;
-                        
+
                     //randomly removes then reinserts an item
                     case "scramble":
                         int randNumScramble1 = rng.Next(0, CL.Count);
-                        int randNumScramble2 = rng.Next(0, CL.Count - 1);                        
+                        int randNumScramble2 = rng.Next(0, CL.Count - 1);
                         CL.Insert(CL.Remove(randNumScramble1), randNumScramble2);
                         Console.WriteLine("a random item has been removed and put back in randomly\n");
                         break;
@@ -98,9 +98,11 @@ namespace LinkedListsPE_NV
                     default:
                         CL.Add(answer);
                         Console.WriteLine(answer + " has been added to the end of the list!");
-                        break;                    
+                        break;
                 }
                 #endregion
+
+
             }
         }
     }
