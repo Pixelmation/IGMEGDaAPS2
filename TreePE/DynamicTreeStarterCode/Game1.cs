@@ -62,7 +62,6 @@ namespace DynamicTreeStarterCode
                 {
                     treeRed.Insert(rng.Next(0,100));
                 }
-
                 else
                 {
                     treeRed.Insert(50);
