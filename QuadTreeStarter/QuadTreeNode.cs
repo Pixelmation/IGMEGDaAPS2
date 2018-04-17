@@ -72,28 +72,32 @@ namespace QuadTreeStarter
         public void AddObject(GameObject gameObj)
         {
             // ACTIVITY: Complete this method
-            if (_objects.Count >= MAX_OBJECTS_BEFORE_SUBDIVIDE)
+
+            //check to see if there are more object than the max
+            if (_objects.Count >= MAX_OBJECTS_BEFORE_SUBDIVIDE && _divisions == null)
             {
                 Divide();
             }
-            if (_rect.Contains(gameObj.Rectangle))
-            {
-                //check which quad it fits into 
-                //if it can fit inside a subdivision recursively call addobject on that node
-                if (_divisions != null)
-                {
-                    for (int i = 0; i < 4; i++)
-                    {
-                        if (_divisions[i].Rectangle.Contains(_rect))
-                        {
-                            _divisions[i].AddObject(gameObj);
-                        }
-                    }
-                }
-            }
-            else
+
+            //otherwise just add it to objects
+            else if (_divisions == null)
             {
                 _objects.Add(gameObj);
+                return;
+            }
+
+            //check to see if iny of the rectangles contains a square
+            if (_rect.Contains(gameObj.Rectangle))
+            {
+                //if it fits in a subdivision, move that square to the smaller subdivision
+                for (int i = 0; i < 4; i++)
+                {
+                    if (_divisions[i]._rect.Contains(gameObj.Rectangle))
+                    {
+                        _divisions[i].AddObject(gameObj);
+                        return;
+                    }
+                }
             }
         }
 
@@ -107,19 +111,34 @@ namespace QuadTreeStarter
             // ACTIVITY: Complete this method
             _divisions = new QuadTreeNode[4];
 
+            //create the upper left, upper right, bottom left, and bottom right rectangles respectively
             QuadTreeNode node1 = new QuadTreeNode(_rect.X, _rect.Y, _rect.Width / 2, _rect.Height / 2);
             QuadTreeNode node2 = new QuadTreeNode(_rect.X + _rect.Width / 2, _rect.Y, _rect.Width / 2, _rect.Height / 2);
             QuadTreeNode node3 = new QuadTreeNode(_rect.X, _rect.Y + _rect.Height / 2, _rect.Width / 2, _rect.Height / 2);
             QuadTreeNode node4 = new QuadTreeNode(_rect.X + _rect.Width / 2, _rect.Y + _rect.Height / 2, _rect.Width / 2, _rect.Height / 2);
 
+            //set each of the nodes above to be the divisions
             _divisions[0] = node1;
             _divisions[1] = node2;
             _divisions[2] = node3;
             _divisions[3] = node4;
 
+            //adds each square in objects to a temp list then moves them to their new leaf nodes
             for (int i = 0; i < _divisions.Length; i++)
             {
-                AddObject(_objects[i]);
+                List<GameObject> tempList = new List<GameObject>();
+                foreach (GameObject item in _objects)
+                {
+                    tempList.Add(item);
+                }
+
+                foreach (GameObject item in tempList)
+                {
+                    if (_divisions[i].Rectangle.Contains(item.Rectangle))
+                    {
+                        _divisions[i].AddObject(item);
+                    }
+                }
             }
         }
 
@@ -133,6 +152,16 @@ namespace QuadTreeStarter
         {
             List<Rectangle> rects = new List<Rectangle>();
 
+            //if there are subdivisions, add each of them then check each of them for more subdivions recursively
+            if (_divisions != null)
+            {
+                for (int i = 0; i < _divisions.Length; i++)
+                {
+                    rects.Add(_divisions[i].Rectangle);
+                    rects.AddRange(_divisions[i].GetAllRectangles());
+                }
+
+            }
             // ACTIVITY: Complete this method
 
             return rects;
@@ -147,6 +176,20 @@ namespace QuadTreeStarter
         public QuadTreeNode GetContainingQuad(Rectangle rect)
         {
             // ACTIVITY: Complete this method
+
+            foreach (QuadTreeNode node in _divisions)
+            {
+                if (node.Rectangle.Contains(rect))
+                {
+                    if (_divisions != null)
+                    {
+                        node.GetContainingQuad(node.Rectangle);
+                        return node;
+                    }
+                }
+
+            }
+
 
             // Return null if this quad doesn't completely contain
             // the rectangle that was passed in
