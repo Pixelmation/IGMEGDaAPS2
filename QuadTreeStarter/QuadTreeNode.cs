@@ -86,7 +86,7 @@ namespace QuadTreeStarter
                 return;
             }
 
-            //check to see if iny of the rectangles contains a square
+            //check to see if any of the rectangles contains a square
             if (_rect.Contains(gameObj.Rectangle))
             {
                 //if it fits in a subdivision, move that square to the smaller subdivision
@@ -124,22 +124,18 @@ namespace QuadTreeStarter
             _divisions[3] = node4;
 
             //adds each square in objects to a temp list then moves them to their new leaf nodes
-            for (int i = 0; i < _divisions.Length; i++)
-            {
-                List<GameObject> tempList = new List<GameObject>();
-                foreach (GameObject item in _objects)
-                {
-                    tempList.Add(item);
-                }
+            //temporary save objects in a list to transfer
+            List<GameObject> tempObjects = new List<GameObject>();
+            tempObjects.AddRange(_objects);
 
-                foreach (GameObject item in tempList)
-                {
-                    if (_divisions[i].Rectangle.Contains(item.Rectangle))
-                    {
-                        _divisions[i].AddObject(item);
-                    }
-                }
+            //clear the objects list for this division
+
+            //recurse to finish transfering objects from parent rectangle
+            foreach (GameObject gameObj in tempObjects)
+            {
+                AddObject(gameObj);
             }
+            _objects.Clear();
         }
 
         /// <summary>
@@ -177,20 +173,26 @@ namespace QuadTreeStarter
         {
             // ACTIVITY: Complete this method
 
-            foreach (QuadTreeNode node in _divisions)
+            if (_rect.Contains(rect))
             {
-                if (node.Rectangle.Contains(rect))
-                {
+                //for (int i = 0; i < _divisions.Length; i++)
+                //{
                     if (_divisions != null)
                     {
-                        node.GetContainingQuad(node.Rectangle);
-                        return node;
+                        //iterate to find the division that contains the specified rectangle
+                        for (int i = 0; i < 4; i++)
+                        {
+                            //recursively go through each division if they exist
+                            if (_divisions[i]._rect.Contains(rect))
+                            {
+                                return _divisions[i].GetContainingQuad(rect);
+                            }
+                        }
                     }
-                }
-
+                    //returns current rectangle
+                    return this;
+                //}
             }
-
-
             // Return null if this quad doesn't completely contain
             // the rectangle that was passed in
             return null;
