@@ -22,7 +22,7 @@ namespace Graphs
             Rooms.Add("Game room", new List<string>() { "Kitchen","Trophy room", "Stairwell", "Hallway"});
             Rooms.Add("Trophy room", new List<string>() { "Kitchen", "Game room"});
             Rooms.Add("Lounge", new List<string>() {"Hallway", "Exit"});
-            Rooms.Add("Kitchen", new List<string>() { "Trophy room","Game Room"});
+            Rooms.Add("Kitchen", new List<string>() { "Trophy room","Game room"});
             Rooms.Add("Stairwell", new List<string>() { "Game room"});           
             Rooms.Add("Hallway", new List<string>() { "GameRoom", "Lounge"});           
             Rooms.Add("Exit", new List<string>() { "Lounge"});
