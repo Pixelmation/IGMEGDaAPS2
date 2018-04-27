@@ -24,16 +24,17 @@ namespace Dijkstras
         Vertex nearestVertex;
         public Vertex NearestVertex { get => nearestVertex; set => nearestVertex = value; }
 
+        //boolean for if a vertices is contained in the path
+        bool permanent;
+        public bool Permanent { get => permanent; set => permanent = value; }
+
         /// <summary>
         /// Constructor, passing in name and distance
         /// </summary>
         /// <param name="name"></param>
-        public Vertex(string name, int distance)
+        public Vertex(string name)
         {
             Name = name;
-            TotalDistance = distance;
-            NearestVertex = null;
-            Visited = false;
         }
     }
 }

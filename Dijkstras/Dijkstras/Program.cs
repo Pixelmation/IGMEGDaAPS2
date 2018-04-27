@@ -10,7 +10,10 @@ namespace Dijkstras
     {
         static void Main(string[] args)
         {
-            
+            Graph graph = new Graph();
+
+
+            graph.ShortestPath("lounge");
         }
     }
 }
