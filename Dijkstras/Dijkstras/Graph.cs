@@ -162,6 +162,7 @@ namespace Dijkstras
                     if (item.Permanent == false)
                     {
                         allPermanent = false;
+                        break;
                     }
                 }
 
@@ -192,28 +193,30 @@ namespace Dijkstras
                     currentVertex = GetUnvisitedNeighbor(start);
                 }
 
-
+                //sets the shortest distance
                 Vertex newVertex = new Vertex("name");
                 newVertex.TotalDistance = int.MaxValue;
                 foreach (Vertex item in ListVertices)
                 {
                     if (item.Permanent == false)
                     {
-                        if (item.TotalDistance < newVertex.TotalDistance)
+                        if (item.TotalDistance <= newVertex.TotalDistance)
                         {
                             newVertex = item;
+                            
                         }
                     }
 
                 }
 
                 newVertex.Permanent = true;
-                //start = newVertex.Name;
-                //currentVertex = currentVertex.NearestVertex;
-
+                start = newVertex.Name;
+                
             }
 
-            Console.WriteLine("The shortest path from " + save + " to " + destination + " is:");
+            //print out each vertex then it's nearest neighbor
+            currentVertex = DictVertices[destination];
+            Console.WriteLine("\nThe shortest path from " + save + " to " + destination + " is:");
             while (currentVertex != null)
             {
                 Console.WriteLine(currentVertex.Name);
